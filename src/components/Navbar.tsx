@@ -1,10 +1,23 @@
 import {motion} from 'framer-motion'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Dialog, DialogPanel} from '@headlessui/react';
+import { X } from 'lucide-react';
 
 const Navbar = () => {
     const [openFile, setOpenFile] = useState<boolean>(false)
+    const [openNew, setOpenNew] = useState<boolean>(false);
+    const checkboxRef = useRef<HTMLInputElement>(null)
 
+    const handleNew = () => {
+        setOpenFile(false)
+        setOpenNew(true)
+    }
+
+    const toggleCheckbox = () => {
+        if (checkboxRef.current) {
+        checkboxRef.current.checked = !checkboxRef.current.checked;
+        }
+    };
 
   return (
     <>
@@ -33,12 +46,82 @@ const Navbar = () => {
                         transition={{type: "tween", duration: 0.4, stiffness: 5}}
                     >
                         <DialogPanel className="text-sm w-auto leading-none p-1 text-[rgb(23,23,23)] relative">
-                            <button className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1'>New</button>
+                            <button onClick={()=> handleNew()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1'>New...</button>
                         </DialogPanel>
                     </motion.div>
                 </Dialog>
             </div>
         </motion.div>
+        <Dialog open={openNew} onClose={setOpenNew}>
+            
+
+            {/* Draggable panel */}
+            <motion.div
+                drag
+                dragMomentum={false}
+                className="fixed top-20 left-1/2 -translate-x-1/2 w-[50%] shadow-xl cursor-grab active:cursor-grabbing"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: "tween", duration: 0.3 }}
+            >
+                <DialogPanel className="text-sm w-auto leading-none p-1 text-[rgb(23,23,23)] relative bg-white">
+                    
+                    {/* Drag Handle */}
+                    <motion.div
+                        className="flex justify-between p-1 text-sm cursor-grab active:cursor-grabbing"
+                        >
+                        <p>New</p>
+                        <button
+                            className="cursor-pointer"
+                            onClick={() => setOpenNew(false)}
+                        >
+                            <X size={20} />
+                        </button>
+                        </motion.div>
+
+                        <motion.form
+                            className="flex gap-3 p-5"
+                        >
+                            <motion.div className="flex flex-1 flex-col gap-3">
+                                <div className="flex gap-2 items-center">
+                                <label htmlFor="name">Name: </label>
+                                <input
+                                    type="text"
+                                    className="p-2 border border-gray-500 w-full"
+                                    placeholder="Untitled"
+                                />
+                                </div>
+
+                                <div className="flex gap-2 items-center">
+                                <label htmlFor="size">Size: </label>
+                                <select className="w-full border border-gray-500 p-2">
+                                    <option value="A4">A4</option>
+                                    <option value="6x8">6x8 inches</option>
+                                    <option value="4x6">4x6 inches</option>
+                                </select>
+                                </div>
+
+                                <div>
+                                    <button
+                                        type="button"
+                                        onClick={() => toggleCheckbox()}
+                                        className="flex items-center gap-2 p-2"
+                                    >
+                                    <input type="checkbox" ref={checkboxRef} />
+                                        <label>Border</label>
+                                    </button>
+                                </div>
+                            </motion.div>
+
+                            <div className='flex flex-col gap-2 '>
+                                <button className='px-5 py-2 border w-full border-blue-500 hover:shadow-none shadow-[inset_0_0_10px_rgba(59,130,246,0.5)] duration-300'>Continue</button>
+                                <button type='button' onClick={() => setOpenNew(false)} className='px-5 py-2 border border-gray-500 hover:border-blue-500 hover:bg-blue-100 w-full duration-300'>Cancel</button>
+                            </div>
+                        </motion.form>
+                </DialogPanel>
+            </motion.div>
+            </Dialog>
     </>
   )
 }
