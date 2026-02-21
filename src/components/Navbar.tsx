@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../state/store';
 import { setFiles } from '../state/Files/FileSlice';
 import { toast, ToastContainer } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 type possibleErrs = {
     name: boolean,
@@ -107,13 +108,13 @@ const Navbar = () => {
                         </DialogPanel>
                     </motion.div>
                 </Dialog>
-                <button onClick={() => setOpenFile(true)} className={`gradientBtn leading-none px-3 py-1 rounded text-sm ${openFile && "bg-[rgb(50,50,50)]!"}`}>Tutorial</button>
+                <a href={"https://www.youtube.com/@AtheoCodes"} target='_blank' className={`gradientBtn leading-none px-3 py-1 rounded text-sm ${openFile && "bg-[rgb(50,50,50)]!"}`}>Tutorial</a>
             </div>
         </motion.div>
-        <div className='absolute flex gap-3 top-9.25 left-0 right-0 h-[35px] bg-green-500 navbarStyle'>
+        <div className='absolute flex max-sm:gap-1 gap-3 top-9.25 left-0 right-0 h-[35px] bg-green-500 navbarStyle'>
             <div className='flex text-sm items-center gap-2'>
                 <label htmlFor="grids">Grids:</label>
-                <select className='border border-[rgb(23,23,23)] px-3 bg-[rgb(23,23,23)] rounded'>
+                <select className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'>
                     <option value="1x1 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>1x1 inch boxes</option>
                     <option value="2x2 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>2x2 inch boxes</option>
                     <option value="3x3 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>3x3 inch boxes</option>
@@ -132,7 +133,8 @@ const Navbar = () => {
             
             <div className='flex items-center gap-1'>
                 <input type="checkbox" name='bnwChkbx'/>
-                <label htmlFor="bnwChkbx">Black & White...</label>
+                <label htmlFor="bnwChkbx" className='max-sm:hidden'>Black & White...</label>
+                <label htmlFor="bnwChkbx" className='min-md:hidden'>B&W</label>
             </div>
         </div>
         <Dialog open={openNew} onClose={setOpenNew}>
