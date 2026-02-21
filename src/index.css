@@ -2,6 +2,11 @@
 
 body{
   background-color: rgb(30,30,30);
+  height: 2000px;
+}
+
+.navbarStyle{
+  @apply h-[35px] py-1 px-3 flex items-center text-[rgb(234,231,230)] bg-gradient-to-t from-[rgb(77,77,77)] to-[rgb(85,85,85)]
 }
 
 .gradientBtn{
