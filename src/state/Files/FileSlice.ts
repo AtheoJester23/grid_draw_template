@@ -3,15 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 type filesType = {
     name: null | string,
     size: null | string,
-    border: boolean
+    border: boolean,
 }
 
 type stateType = {
-    files: filesType[]
+    files: filesType[],
+    download: boolean
 }
 
 const initialState: stateType = {
-    files: []
+    files: [],
+    download: true
 }
 
 const FileSlice = createSlice({
@@ -20,9 +22,12 @@ const FileSlice = createSlice({
     reducers: {
         setFiles(state, action){
             state.files = action.payload
+        },
+        setDownload(state, action){
+            state.download = action.payload
         }
     }
 })
 
-export const { setFiles } = FileSlice.actions;
+export const { setFiles, setDownload } = FileSlice.actions;
 export default FileSlice.reducer;

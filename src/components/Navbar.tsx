@@ -5,7 +5,7 @@ import { Dialog, DialogPanel} from '@headlessui/react';
 import { X } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../state/store';
-import { setFiles } from '../state/Files/FileSlice';
+import { setDownload, setFiles } from '../state/Files/FileSlice';
 import { toast, ToastContainer } from 'react-toastify';
 
 type possibleErrs = {
@@ -79,7 +79,7 @@ const Navbar = () => {
 
     const handleDl = () => {
         setOpenFile(false);
-        setOpenDownload(true);
+        dispatch(setDownload(true))
     }
 
   return (
@@ -219,67 +219,6 @@ const Navbar = () => {
         </motion.div>
         </Dialog>
 
-        {/* Download file */}
-        <Dialog open={openDownload} onClose={setOpenDownload}>
-        {/* Draggable panel */}
-        <motion.div
-            drag
-            dragMomentum={false}
-            className="fixed top-20 left-1/2 -translate-x-1/2 max-sm:w-auto w-[50%] shadow-xl cursor-grab active:cursor-grabbing z-30"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ type: "tween", duration: 0.3 }}
-        >
-            <DialogPanel className="text-sm w-auto leading-none p-1 text-[rgb(23,23,23)] relative bg-white">
-                
-                {/* Drag Handle */}
-                <motion.div
-                    className="flex justify-between p-1 text-sm cursor-grab active:cursor-grabbing"
-                    >
-                    <p>Download</p>
-                    <button
-                        className="cursor-pointer"
-                        onClick={() => setOpenDownload(false)}
-                    >
-                        <X size={20} />
-                    </button>
-                    </motion.div>
-
-                    <motion.form
-                        onSubmit={(e) => handleNewFile(e)}
-                        className="flex max-sm:flex-col gap-3 p-5"
-                    >
-                        <motion.div className="flex flex-1 flex-col gap-3">
-                            <div className="flex gap-2 items-center">
-                                <label htmlFor="name">Name: </label>
-                                <input
-                                    type="text"
-                                    onChange={() => setErrors(prev => ({...prev, name: false}))}
-                                    className={`p-2 border ${errors.name === false ? "border-gray-500" : "border-red-500"} w-full`}
-                                    placeholder="Untitled"
-                                    name='name'
-                                />
-                            </div>
-
-                            <div className="flex gap-2 items-center">
-                                <label htmlFor="fileType" className='whitespace-nowrap'>File Type: </label>
-                                <select name='fileType' className="w-full border border-gray-500 p-2">
-                                    <option value="png">.png</option>
-                                    <option value="jpg">.jpg</option>
-                                </select>
-                            </div>
-                        </motion.div>
-
-                        <div className='flex flex-col gap-2 '>
-                            <button className='px-5 py-2 border w-full border-blue-500 hover:shadow-none shadow-[inset_0_0_10px_rgba(59,130,246,0.5)] duration-300'>Continue</button>
-                            <button type='button' onClick={() => setOpenDownload(false)} className='px-5 py-2 border border-gray-500 hover:border-blue-500 hover:bg-blue-100 w-full duration-300'>Cancel</button>
-                            <button type='button' onClick={() => handleTest()} className='px-5 py-2 border border-gray-500 hover:border-blue-500 hover:bg-blue-100 w-full duration-300'>Test</button>
-                        </div>
-                    </motion.form>
-            </DialogPanel>
-        </motion.div>
-        </Dialog>
         <ToastContainer theme='dark'/>
     </div>
   )
