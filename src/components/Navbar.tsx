@@ -77,7 +77,7 @@ const Navbar = () => {
     }
 
   return (
-    <div className='relative'>
+    <div className='relative z-20'>
         <motion.div 
             className='absolute top-0 left-0 right-0 navbarStyle'
             initial={{ y: -100 }}
@@ -87,7 +87,7 @@ const Navbar = () => {
             <img src="logo.png" className="w-5 h-5 me-2" alt="" />
             <div className='relative'>
                 <button onClick={() => setOpenFile(true)} className={`gradientBtn leading-none px-3 py-1 rounded text-sm ${openFile && "bg-[rgb(50,50,50)]!"}`}>File</button>
-                <Dialog open={openFile} onClose={setOpenFile} className={"absolute top-10 left-10"}>
+                <Dialog open={openFile} onClose={setOpenFile} className={"absolute top-10 left-10 z-1000"}>
                     {/* Background overlay */}
                     <motion.div className="fixed inset-0" 
                         initial={{opacity: 0}}
