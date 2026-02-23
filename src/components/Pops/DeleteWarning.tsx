@@ -4,10 +4,14 @@ import type { AppDispatch, RootState } from "../../state/store"
 import { setDelete, setDeleteTarget, setFiles } from "../../state/Files/FileSlice";
 import { motion } from 'framer-motion'
 import { TriangleAlert, X } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const DeleteWarning = () => {
     const isOpen = useSelector((state: RootState) => state.fileHolder.delete);
     const dispatch = useDispatch<AppDispatch>()
+
+    const {tabNum} = useParams()
+    const navigate = useNavigate();
 
     const handleAbort = () => {
         dispatch(setDelete(false));
@@ -18,9 +22,21 @@ const DeleteWarning = () => {
         dispatch((dispatch, getState) => {
             const currentFiles = getState().fileHolder.files;
             const selectedTab = getState().fileHolder.targetDelete
-            dispatch(setFiles(currentFiles.filter((item, index) => index !== selectedTab)))
+            
+            const filtered = currentFiles.filter((item, index) => index !== selectedTab)
+            
+            dispatch(setFiles(filtered));
             dispatch(setDeleteTarget(null));
             dispatch(setDelete(false))
+
+            if(filtered.length > 0 && selectedTab! <= Number(tabNum)){
+                navigate(`/tab/${Number(tabNum) - 1}`)
+                dispatch(setDeleteTarget(Number(tabNum) - 1));
+            }else if(filtered.length > 0 && selectedTab! > Number(tabNum)){
+                console.log("Do nothing")
+            }else{
+                navigate('/')
+            }
         })
     }
 
@@ -35,7 +51,7 @@ const DeleteWarning = () => {
                 <motion.div
                     className={"text-sm w-auto leading-none text-[rgb(23,23,23)] relative bg-white"}
                 >
-                    <DialogPanel className="text-sm w-auto leading-none text-[rgb(23,23,23)] relative bg-white">
+                    <DialogPanel className="text-sm w-auto leading-none text-[rgb(23,23,23)] relative bg-white shadow-xl">
                         <motion.div className="flex flex-col justify-between text-sm cursor-grab active:cursor-grabbing">
                             <div className="flex justify-between items-center leading-none p-2">
                                 <h1>Delete warning</h1>

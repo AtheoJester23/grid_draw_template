@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setFiles, setNewFile } from '../../state/Files/FileSlice'
 import { useRef, useState, type FormEvent } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 type possibleErrs = {
     name: boolean,
@@ -27,6 +28,7 @@ const NewFile = () => {
     };
 
     const fileholder = useSelector((state: RootState) => state.fileHolder.files)
+    const navigate = useNavigate();
 
     const handleNewFile = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -68,6 +70,8 @@ const NewFile = () => {
         dispatch(setNewFile(false))
 
         console.log(fileholder);
+
+        navigate(`/tab/${fileholder.length}`)
     }
 
   return (

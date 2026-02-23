@@ -71,7 +71,7 @@ const Navbar = () => {
                     <a href={"https://www.youtube.com/@AtheoCodes"} target='_blank' className={`gradientBtn leading-none px-3 py-[1.5px] ms-1 rounded text-sm`}>Tutorial</a>
                 </div>
             </motion.div>
-            <div className='navbarStyle flex gap-4'>
+            <div className='navbarStyle flex gap-4 border-b-2 border-[rgb(23,23,23)]'>
                 <div className='flex text-sm items-center gap-2'>
                     <label htmlFor="grids">Grids:</label>
                     <select className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'>

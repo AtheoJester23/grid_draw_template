@@ -55,7 +55,7 @@ const BottomNav = () => {
   }
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-[1.6px]">
+    <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-[1.6px] bg-[rgb(23,23,23)]">
       {files.length > 0 && (
         <div className="px-2 flex gap-0.5 tabsContainer">
           {files.map((item, index) => (
