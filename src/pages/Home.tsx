@@ -11,6 +11,7 @@ const Home = () => {
   const zoomVal = useSelector((state: RootState) => state.editFile.zoom)
   const fileManager = useSelector((state: RootState) => state.fileHolder.files);
   const ref = useRef(null);
+  const grayScale = useSelector((state: RootState) => state.fileHolder.grayscale)
 
   const dispatch = useDispatch<AppDispatch>()
   
@@ -40,7 +41,7 @@ const Home = () => {
           {selected == "4x6" && 
             <motion.div 
               ref={ref}
-              className="bg-white regular4x6 max-sm:phone4x6 flex justify-center items-center overflow-hidden"
+              className={`${grayScale == true && 'grayscale'} bg-white regular4x6 max-sm:phone4x6 flex justify-center items-center overflow-hidden`}
             >
               <motion.img drag dragMomentum={false} src="logo.png" className="w-50" />
             </motion.div>

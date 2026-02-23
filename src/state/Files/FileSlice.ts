@@ -8,12 +8,14 @@ type filesType = {
 
 type stateType = {
     files: filesType[],
-    download: boolean
+    download: boolean,
+    grayscale: boolean,
 }
 
 const initialState: stateType = {
     files: [],
-    download: false
+    download: false,
+    grayscale: false
 }
 
 const FileSlice = createSlice({
@@ -25,9 +27,12 @@ const FileSlice = createSlice({
         },
         setDownload(state, action){
             state.download = action.payload
+        },
+        setGraycale(state, action){
+            state.grayscale = action.payload
         }
     }
 })
 
-export const { setFiles, setDownload } = FileSlice.actions;
+export const { setFiles, setDownload, setGraycale } = FileSlice.actions;
 export default FileSlice.reducer;

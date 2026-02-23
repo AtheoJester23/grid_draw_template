@@ -5,7 +5,7 @@ import { Dialog, DialogPanel} from '@headlessui/react';
 import { X } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../state/store';
-import { setDownload, setFiles } from '../state/Files/FileSlice';
+import { setDownload, setFiles, setGraycale } from '../state/Files/FileSlice';
 import { toast, ToastContainer } from 'react-toastify';
 
 type possibleErrs = {
@@ -18,7 +18,7 @@ const Navbar = () => {
     const [openFile, setOpenFile] = useState<boolean>(false)
     const [openNew, setOpenNew] = useState<boolean>(false);
     const [errors, setErrors] = useState<possibleErrs>({name: false, size: false, border: false})
-    
+
     const [openDownload, setOpenDownload] = useState<boolean>(false)
 
     const checkboxRef = useRef<HTMLInputElement>(null)
@@ -82,6 +82,13 @@ const Navbar = () => {
         dispatch(setDownload(true))
     }
 
+    const handleBnW = () => {
+        dispatch((dispatch, getState) => {
+            const currentState = getState().fileHolder.grayscale;
+            dispatch(setGraycale(!currentState))
+        })
+    }
+
   return (
     <div className='relative z-20'>
         <div className='absolute top-0 left-0 right-0 bg-[rgb(30,30,30)] flex flex-col gap-0.5'>
@@ -139,7 +146,7 @@ const Navbar = () => {
                 <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
                 
                 <div className='flex items-center gap-1'>
-                    <input type="checkbox" name='bnwChkbx'/>
+                    <input type="checkbox" name='bnwChkbx' onChange={() => handleBnW()}/>
                     <label htmlFor="bnwChkbx" className='max-sm:hidden'>Black & White...</label>
                     <label htmlFor="bnwChkbx" className='min-md:hidden'>B&W</label>
                 </div>
