@@ -36,7 +36,7 @@ const Home = () => {
       >
         {selected == "4x6" && 
           <motion.div 
-            className="mt-8 bg-white regular4x6 max-sm:phone4x6"
+            className="mt-8 bg-white regular4x6 max-sm:phone4x6 flex justify-center items-center"
           >
             <motion.img drag dragMomentum={false} src="logo.png" className="w-50" />
           </motion.div>

@@ -19,6 +19,8 @@ const Navbar = () => {
     const [openNew, setOpenNew] = useState<boolean>(false);
     const [errors, setErrors] = useState<possibleErrs>({name: false, size: false, border: false})
     
+    const [openDownload, setOpenDownload] = useState<boolean>(false)
+
     const checkboxRef = useRef<HTMLInputElement>(null)
     const fileholder = useSelector((state: RootState) => state.fileHolder.files)
     const dispatch = useDispatch<AppDispatch>()
@@ -75,6 +77,11 @@ const Navbar = () => {
         console.log(errors.name)
     }
 
+    const handleDl = () => {
+        setOpenFile(false);
+        setOpenDownload(true);
+    }
+
   return (
     <div className='relative z-20'>
         <div className='absolute top-0 left-0 right-0 bg-[rgb(30,30,30)] flex flex-col gap-0.5'>
@@ -104,11 +111,11 @@ const Navbar = () => {
                         >
                             <DialogPanel className="flex flex-col gap-2 text-sm w-auto leading-none p-1 text-[rgb(23,23,23)] relative">
                                 <button onClick={()=> handleNew()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1'>New...</button>
-                                <button onClick={()=> handleNew()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1 text-gray-500'>Download</button>
+                                <button onClick={()=> handleDl()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1 text-gray-500'>Download</button>
                             </DialogPanel>
                         </motion.div>
                     </Dialog>
-                    <a href={"https://www.youtube.com/@AtheoCodes"} target='_blank' className={`gradientBtn leading-none px-3 py-1 rounded text-sm ${openFile && "bg-[rgb(50,50,50)]!"}`}>Tutorial</a>
+                    <a href={"https://www.youtube.com/@AtheoCodes"} target='_blank' className={`gradientBtn leading-none px-3 py-[1.5px] ms-1 rounded text-sm`}>Tutorial</a>
                 </div>
             </motion.div>
             <div className='navbarStyle flex gap-4'>
@@ -138,6 +145,7 @@ const Navbar = () => {
                 </div>
             </div>
         </div>
+        {/* Open new file */}
         <Dialog open={openNew} onClose={setOpenNew}>
         {/* Draggable panel */}
         <motion.div
@@ -204,6 +212,68 @@ const Navbar = () => {
                         <div className='flex flex-col gap-2 '>
                             <button className='px-5 py-2 border w-full border-blue-500 hover:shadow-none shadow-[inset_0_0_10px_rgba(59,130,246,0.5)] duration-300'>Continue</button>
                             <button type='button' onClick={() => setOpenNew(false)} className='px-5 py-2 border border-gray-500 hover:border-blue-500 hover:bg-blue-100 w-full duration-300'>Cancel</button>
+                            <button type='button' onClick={() => handleTest()} className='px-5 py-2 border border-gray-500 hover:border-blue-500 hover:bg-blue-100 w-full duration-300'>Test</button>
+                        </div>
+                    </motion.form>
+            </DialogPanel>
+        </motion.div>
+        </Dialog>
+
+        {/* Download file */}
+        <Dialog open={openDownload} onClose={setOpenDownload}>
+        {/* Draggable panel */}
+        <motion.div
+            drag
+            dragMomentum={false}
+            className="fixed top-20 left-1/2 -translate-x-1/2 max-sm:w-auto w-[50%] shadow-xl cursor-grab active:cursor-grabbing z-30"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ type: "tween", duration: 0.3 }}
+        >
+            <DialogPanel className="text-sm w-auto leading-none p-1 text-[rgb(23,23,23)] relative bg-white">
+                
+                {/* Drag Handle */}
+                <motion.div
+                    className="flex justify-between p-1 text-sm cursor-grab active:cursor-grabbing"
+                    >
+                    <p>Download</p>
+                    <button
+                        className="cursor-pointer"
+                        onClick={() => setOpenDownload(false)}
+                    >
+                        <X size={20} />
+                    </button>
+                    </motion.div>
+
+                    <motion.form
+                        onSubmit={(e) => handleNewFile(e)}
+                        className="flex max-sm:flex-col gap-3 p-5"
+                    >
+                        <motion.div className="flex flex-1 flex-col gap-3">
+                            <div className="flex gap-2 items-center">
+                                <label htmlFor="name">Name: </label>
+                                <input
+                                    type="text"
+                                    onChange={() => setErrors(prev => ({...prev, name: false}))}
+                                    className={`p-2 border ${errors.name === false ? "border-gray-500" : "border-red-500"} w-full`}
+                                    placeholder="Untitled"
+                                    name='name'
+                                />
+                            </div>
+
+                            <div className="flex gap-2 items-center">
+                                <label htmlFor="fileType" className='whitespace-nowrap'>File Type: </label>
+                                <select name='fileType' className="w-full border border-gray-500 p-2">
+                                    <option value="png">.png</option>
+                                    <option value="jpg">.jpg</option>
+                                </select>
+                            </div>
+                        </motion.div>
+
+                        <div className='flex flex-col gap-2 '>
+                            <button className='px-5 py-2 border w-full border-blue-500 hover:shadow-none shadow-[inset_0_0_10px_rgba(59,130,246,0.5)] duration-300'>Continue</button>
+                            <button type='button' onClick={() => setOpenDownload(false)} className='px-5 py-2 border border-gray-500 hover:border-blue-500 hover:bg-blue-100 w-full duration-300'>Cancel</button>
                             <button type='button' onClick={() => handleTest()} className='px-5 py-2 border border-gray-500 hover:border-blue-500 hover:bg-blue-100 w-full duration-300'>Test</button>
                         </div>
                     </motion.form>
