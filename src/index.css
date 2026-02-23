@@ -11,3 +11,12 @@ body{
 .gradientBtn{
   @apply hover:bg-gradient-to-b hover:from-[rgb(150,150,150)] to-[rgb(80,80,80)] border border-[rgb(80,80,80)] hover:border-[rgb(60,60,70)] duration-200
 }
+
+/* 4x6 */
+.regular4x6{
+  @apply h-[600px] w-[400px];
+}
+
+.phone4x6{
+  @apply h-[400px] w-[267px]
+}

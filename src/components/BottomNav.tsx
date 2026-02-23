@@ -1,14 +1,12 @@
 import { Minus, Plus } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../state/store"
-import { setZoom } from "../state/EditConfig/EditSlice"
+import { setFrame, setZoom } from "../state/EditConfig/EditSlice"
 import { useRef } from "react"
 
 const BottomNav = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const zoomVal = useSelector((state: RootState) => state.editFile.zoom);
   const intervalRef = useRef<number | null>(null);
-
 
   const handleZoomIn = () => {
     if (intervalRef.current !== null) return;
@@ -41,10 +39,19 @@ const BottomNav = () => {
     }, 50)
   }
   
+  const handleResetFrame = () => {
+     dispatch(setZoom(1))
+     dispatch(setFrame({x: 0, y:0}))
+  }
+
   return (
-    <div className='text-sm navbarStyle w-full absolute bottom-0 flex justify-end'>
+    <div className='text-sm navbarStyle w-full absolute bottom-0 flex justify-between'>
+      <button onClick={handleResetFrame} className="select-none gradientBtn px-3 hover:cursor-pointer duration-300" >
+        Center Frame
+      </button>
+      
       <div className="flex items-center gap-1">
-        <div className="bg-white text-[rgb(23,23,23)] px-3 rounded">
+        <div className="select-none bg-white text-[rgb(23,23,23)] px-3 rounded">
             <p>100%</p>
         </div>
         <div className="flex gap-1">

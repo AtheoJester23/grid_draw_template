@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../state/store';
 import { setFiles } from '../state/Files/FileSlice';
 import { toast, ToastContainer } from 'react-toastify';
-import { Link } from 'react-router-dom';
 
 type possibleErrs = {
     name: boolean,
@@ -78,63 +77,65 @@ const Navbar = () => {
 
   return (
     <div className='relative z-20'>
-        <motion.div 
-            className='absolute top-0 left-0 right-0 navbarStyle'
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ type: 'spring', stiffness: 30, duration: 0.5 }}  
-        >
-            <img src="logo.png" className="w-5 h-5 me-2" alt="" />
-            <div className='relative'>
-                <button onClick={() => setOpenFile(true)} className={`gradientBtn leading-none px-3 py-1 rounded text-sm ${openFile && "bg-[rgb(50,50,50)]!"}`}>File</button>
-                <Dialog open={openFile} onClose={setOpenFile} className={"absolute top-10 left-10 z-1000"}>
-                    {/* Background overlay */}
-                    <motion.div className="fixed inset-0" 
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        exit={{opacity: 0}}
-                    />
+        <div className='absolute top-0 left-0 right-0 bg-[rgb(30,30,30)] flex flex-col gap-0.5'>
+            <motion.div 
+                className='navbarStyle'
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                transition={{ type: 'spring', stiffness: 30, duration: 0.5 }}  
+            >
+                <img src="logo.png" className="w-5 h-5 me-2" alt="" />
+                <div className='relative'>
+                    <button onClick={() => setOpenFile(true)} className={`gradientBtn leading-none px-3 py-1 rounded text-sm ${openFile && "bg-[rgb(50,50,50)]!"}`}>File</button>
+                    <Dialog open={openFile} onClose={setOpenFile} className={"absolute top-10 left-10 z-1000"}>
+                        {/* Background overlay */}
+                        <motion.div className="fixed inset-0" 
+                            initial={{opacity: 0}}
+                            animate={{opacity: 1}}
+                            exit={{opacity: 0}}
+                        />
 
-                    {/* Slide-in panel */}
-                    <motion.div className="overflow-y-auto bg-white"
-                        initial={{y: "-10%"}}
-                        animate={{y: 0}}
-                        exit={{y: "-100%"}}
-                        transition={{type: "tween", duration: 0.4, stiffness: 5}}
-                    >
-                        <DialogPanel className="flex flex-col gap-2 text-sm w-auto leading-none p-1 text-[rgb(23,23,23)] relative">
-                            <button onClick={()=> handleNew()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1'>New...</button>
-                            <button onClick={()=> handleNew()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1 text-gray-500'>Download</button>
-                        </DialogPanel>
-                    </motion.div>
-                </Dialog>
-                <a href={"https://www.youtube.com/@AtheoCodes"} target='_blank' className={`gradientBtn leading-none px-3 py-1 rounded text-sm ${openFile && "bg-[rgb(50,50,50)]!"}`}>Tutorial</a>
-            </div>
-        </motion.div>
-        <div className='absolute flex max-sm:gap-1 gap-3 top-9.25 left-0 right-0 h-[35px] bg-green-500 navbarStyle'>
-            <div className='flex text-sm items-center gap-2'>
-                <label htmlFor="grids">Grids:</label>
-                <select className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'>
-                    <option value="1x1 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>1x1 inch boxes</option>
-                    <option value="2x2 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>2x2 inch boxes</option>
-                    <option value="3x3 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>3x3 inch boxes</option>
-                    <option value="4x4 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>4x4 inch boxes</option>
-                </select>
-            </div>
+                        {/* Slide-in panel */}
+                        <motion.div className="overflow-y-auto bg-white"
+                            initial={{y: "-10%"}}
+                            animate={{y: 0}}
+                            exit={{y: "-100%"}}
+                            transition={{type: "tween", duration: 0.4, stiffness: 5}}
+                        >
+                            <DialogPanel className="flex flex-col gap-2 text-sm w-auto leading-none p-1 text-[rgb(23,23,23)] relative">
+                                <button onClick={()=> handleNew()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1'>New...</button>
+                                <button onClick={()=> handleNew()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1 text-gray-500'>Download</button>
+                            </DialogPanel>
+                        </motion.div>
+                    </Dialog>
+                    <a href={"https://www.youtube.com/@AtheoCodes"} target='_blank' className={`gradientBtn leading-none px-3 py-1 rounded text-sm ${openFile && "bg-[rgb(50,50,50)]!"}`}>Tutorial</a>
+                </div>
+            </motion.div>
+            <div className='navbarStyle flex gap-4'>
+                <div className='flex text-sm items-center gap-2'>
+                    <label htmlFor="grids">Grids:</label>
+                    <select className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'>
+                        <option value="1x1 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>1x1 inch boxes</option>
+                        <option value="2x2 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>2x2 inch boxes</option>
+                        <option value="3x3 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>3x3 inch boxes</option>
+                        <option value="4x4 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>4x4 inch boxes</option>
+                    </select>
+                </div>
 
-            <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
+                <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
 
-            <div className='flex items-center gap-1'>
-                <input type="checkbox" name='borderChkbx'/>
-                <label htmlFor="borderChkbx">Border</label>
-            </div>
+                <div className='flex items-center gap-1'>
+                    <input type="checkbox" name='borderChkbx'/>
+                    <label htmlFor="borderChkbx">Border</label>
+                </div>
 
-            <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
-            
-            <div className='flex items-center gap-1'>
-                <input type="checkbox" name='bnwChkbx'/>
-                <label htmlFor="bnwChkbx" className='max-sm:hidden'>Black & White...</label>
-                <label htmlFor="bnwChkbx" className='min-md:hidden'>B&W</label>
+                <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
+                
+                <div className='flex items-center gap-1'>
+                    <input type="checkbox" name='bnwChkbx'/>
+                    <label htmlFor="bnwChkbx" className='max-sm:hidden'>Black & White...</label>
+                    <label htmlFor="bnwChkbx" className='min-md:hidden'>B&W</label>
+                </div>
             </div>
         </div>
         <Dialog open={openNew} onClose={setOpenNew}>
@@ -142,7 +143,7 @@ const Navbar = () => {
         <motion.div
             drag
             dragMomentum={false}
-            className="fixed top-20 left-1/2 -translate-x-1/2 max-sm:w-auto w-[50%] shadow-xl cursor-grab active:cursor-grabbing"
+            className="fixed top-20 left-1/2 -translate-x-1/2 max-sm:w-auto w-[50%] shadow-xl cursor-grab active:cursor-grabbing z-30"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

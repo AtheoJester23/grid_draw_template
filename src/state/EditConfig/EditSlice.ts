@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type initial = {
-    zoom: number
+    zoom: number,
+    frame: {
+        x: number,
+        y: number
+    }
 }
 
 const initialState: initial = {
-    zoom: 1
+    zoom: 1,
+    frame: {
+        x: 0,
+        y: 0
+    }
 }
 
 const EditSlice = createSlice({
@@ -14,9 +22,12 @@ const EditSlice = createSlice({
     reducers: {
         setZoom(state, action){
             state.zoom = action.payload
+        },
+        setFrame(state, action){
+            state.frame = action.payload
         }
     }
 })
 
-export const { setZoom } = EditSlice.actions;
+export const { setZoom, setFrame } = EditSlice.actions;
 export default EditSlice.reducer;
