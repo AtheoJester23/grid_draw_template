@@ -66,7 +66,9 @@ const NewFile = () => {
             dispatch(setFiles([...currentFiles, saveFile]))
         })
         
-        toast.success("New file created!")
+        toast.success("New file created!", {
+            autoClose: 1000,
+        })
         dispatch(setNewFile(false))
 
         console.log(fileholder);

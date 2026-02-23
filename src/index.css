@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+/* Scrollbar */
+::-webkit-scrollbar{
+  width: 50px;
+  height: 7px;
+}
+/* Track (background area) */
+::-webkit-scrollbar-track {
+  background: rgb(70,70,70);
+}
+/* Draggable thumb */
+::-webkit-scrollbar-thumb {
+  background: rgb(120,120,120);
+  border-radius: 8px;
+}
+
+/* Hover effect */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(100,100,100);
+}
+
 body{
   background-color: rgb(30,30,30);
 }
