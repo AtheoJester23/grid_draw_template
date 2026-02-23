@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from '../../state/store'
 import { setDownload } from '../../state/Files/FileSlice'
 import { useState, type FormEvent, type RefObject, type SubmitEventHandler } from 'react'
-import { toPng } from 'html-to-image'
+import { toJpeg, toPng } from 'html-to-image'
 
 type possibleErrors = {
     name: boolean,
@@ -19,12 +19,26 @@ const Download = ({theRef}: {theRef: RefObject<HTMLDivElement> | RefObject<null>
 
     const handleDownload = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        
+        const formData = new FormData(e.currentTarget);
+        const name = formData.get("name") as string;
+        const fileType = formData.get("fileType")
+
+        console.log(name, fileType);
+
         if(!theRef.current) return;
 
-        const dataUrl = await toPng(theRef.current)
+        let dataUrl = "";
+
+        if(fileType == "png"){
+            dataUrl = await toPng(theRef.current)
+        }
+        if(fileType == "jpg"){
+            dataUrl = await toJpeg(theRef.current)
+        }
         
         const link = document.createElement("a")
-        link.download = "capture.png"
+        link.download = name ?? `Untitled.${fileType}`;
         link.href = dataUrl;
         link.click();
     };

@@ -22,7 +22,6 @@ const Home = () => {
     <>
       <div className='relative overflow-hidden'>
         <motion.div 
-          ref={ref}
           drag
           dragMomentum={false}
           animate={{ scale: zoomVal, x: currentPosition.x, y: currentPosition.y }}
@@ -40,7 +39,8 @@ const Home = () => {
         >
           {selected == "4x6" && 
             <motion.div 
-              className="mt-8 bg-white regular4x6 max-sm:phone4x6 flex justify-center items-center"
+              ref={ref}
+              className="bg-white regular4x6 max-sm:phone4x6 flex justify-center items-center overflow-hidden"
             >
               <motion.img drag dragMomentum={false} src="logo.png" className="w-50" />
             </motion.div>

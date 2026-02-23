@@ -13,7 +13,7 @@ type stateType = {
 
 const initialState: stateType = {
     files: [],
-    download: true
+    download: false
 }
 
 const FileSlice = createSlice({
