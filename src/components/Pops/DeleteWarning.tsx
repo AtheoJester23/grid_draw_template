@@ -39,7 +39,9 @@ const DeleteWarning = () => {
                         <motion.div className="flex flex-col justify-between text-sm cursor-grab active:cursor-grabbing">
                             <div className="flex justify-between items-center leading-none p-2">
                                 <h1>Delete warning</h1>
-                                <X size={20}/>
+                                <button type="button" onClick={handleAbort}>
+                                    <X size={20}/>
+                                </button>
                             </div>
                             <div className="p-2 bg-[rgb(240,240,240)]">
                                 <div className="flex gap-3 items-center">

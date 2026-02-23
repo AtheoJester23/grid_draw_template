@@ -8,6 +8,7 @@ import Download from '../components/Pops/Download';
 import { Plus } from 'lucide-react';
 import NewFile from '../components/Pops/NewFile';
 import DeleteWarning from '../components/Pops/DeleteWarning';
+import { Outlet } from 'react-router-dom';
 
 const Home = () => {
   const currentPosition = useSelector((state: RootState) => state.editFile.frame);
@@ -41,18 +42,13 @@ const Home = () => {
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
           className="grid place-items-center h-screen overflow-y-hidden hover:cursor-grab active:cursor-grabbing"
         >
-          {selected == "4x6" ? (
-            <motion.div 
-              ref={ref}
-              className={`${grayScale == true && 'grayscale'} bg-white regular4x6 max-sm:phone4x6 flex justify-center items-center overflow-hidden`}
-            >
-              <motion.img drag dragMomentum={false} src="logo.png" className="w-50" />
-            </motion.div>
-          ):(
+          {fileManager.length < 1 ? (
             <div className='flex flex-col text-gray-500 justify-center items-center p-5 border border-3 border-gray-500 border-dashed rounded h-[70%] w-[70%]'>
               <Plus className='' size="100"/>
               <p className='text-3xl font-bold'>New File</p>
             </div>
+          ):(
+            <Outlet/>
           )}
         </motion.div>
         <BottomNav/>

@@ -16,12 +16,6 @@ type possibleErrs = {
 
 const Navbar = () => {
     const [openFile, setOpenFile] = useState<boolean>(false)
-    const [openNew, setOpenNew] = useState<boolean>(false);
-    const [errors, setErrors] = useState<possibleErrs>({name: false, size: false, border: false})
-
-    const [openDownload, setOpenDownload] = useState<boolean>(false)
-
-    const checkboxRef = useRef<HTMLInputElement>(null)
     const dispatch = useDispatch<AppDispatch>()
 
     const handleNew = () => {
@@ -50,7 +44,7 @@ const Navbar = () => {
                 animate={{ y: 0 }}
                 transition={{ type: 'spring', stiffness: 30, duration: 0.5 }}  
             >
-                <img src="logo.png" className="w-5 h-5 me-2" alt="" />
+                <img src="/logo.png" className="w-5 h-5 me-2" alt="" />
                 <div className='relative'>
                     <button onClick={() => setOpenFile(true)} className={`gradientBtn leading-none px-3 py-1 rounded text-sm ${openFile && "bg-[rgb(50,50,50)]!"}`}>File</button>
                     <Dialog open={openFile} onClose={setOpenFile} className={"absolute top-10 left-10 z-1000"}>
