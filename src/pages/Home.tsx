@@ -5,6 +5,8 @@ import BottomNav from '../components/BottomNav';
 import { useRef, useState } from 'react';
 import { setFrame } from '../state/EditConfig/EditSlice';
 import Download from '../components/Pops/Download';
+import { Plus } from 'lucide-react';
+import NewFile from '../components/Pops/NewFile';
 
 const Home = () => {
   const currentPosition = useSelector((state: RootState) => state.editFile.frame);
@@ -17,7 +19,7 @@ const Home = () => {
   
   console.log(fileManager);
 
-  const [selected, setSelected] = useState("4x6")
+  const [selected, setSelected] = useState("4x6s")
 
   return (
     <>
@@ -38,18 +40,24 @@ const Home = () => {
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
           className="grid place-items-center h-screen overflow-y-hidden hover:cursor-grab active:cursor-grabbing"
         >
-          {selected == "4x6" && 
+          {selected == "4x6" ? (
             <motion.div 
               ref={ref}
               className={`${grayScale == true && 'grayscale'} bg-white regular4x6 max-sm:phone4x6 flex justify-center items-center overflow-hidden`}
             >
               <motion.img drag dragMomentum={false} src="logo.png" className="w-50" />
             </motion.div>
-          }
+          ):(
+            <div className='flex flex-col text-gray-500 justify-center items-center p-5 border border-3 border-gray-500 border-dashed rounded h-[70%] w-[70%]'>
+              <Plus className='' size="100"/>
+              <p className='text-3xl font-bold'>New File</p>
+            </div>
+          )}
         </motion.div>
         <BottomNav/>
       </div>
       <Download theRef={ref}/>
+      <NewFile/>
     </>
   )
 }
