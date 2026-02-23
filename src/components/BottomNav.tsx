@@ -1,4 +1,4 @@
-import { Minus, Plus } from "lucide-react"
+import { Minus, Plus, RotateCcw } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../state/store"
 import { setFrame, setZoom } from "../state/EditConfig/EditSlice"
@@ -7,6 +7,7 @@ import { useRef } from "react"
 const BottomNav = () => {
   const dispatch = useDispatch<AppDispatch>()
   const intervalRef = useRef<number | null>(null);
+  const currentZoomVal = useSelector((state: RootState) => state.editFile.zoom)
 
   const handleZoomIn = () => {
     if (intervalRef.current !== null) return;
@@ -14,7 +15,7 @@ const BottomNav = () => {
     intervalRef.current = window.setInterval(() => {
       dispatch((dispatch, getState) => {
         const currentZoom = getState().editFile.zoom;
-        if(currentZoom + 0.1 > 3) return;
+        if(currentZoom + 0.1 >= 3.1) return;
         dispatch(setZoom(currentZoom + 0.1))
       })
     }, 50);
@@ -45,14 +46,13 @@ const BottomNav = () => {
   }
 
   return (
-    <div className='text-sm navbarStyle w-full absolute bottom-0 flex justify-between'>
-      <button onClick={handleResetFrame} className="select-none gradientBtn px-3 hover:cursor-pointer duration-300" >
-        Center Frame
-      </button>
-      
+    <div className='text-sm navbarStyle w-full absolute bottom-0 flex justify-end'>
       <div className="flex items-center gap-1">
+        <button onClick={handleResetFrame} className="select-none gradientBtn px-2 hover:cursor-pointer duration-300" >
+          <RotateCcw size={20}/>
+        </button>
         <div className="select-none bg-white text-[rgb(23,23,23)] px-3 rounded">
-            <p>100%</p>
+            <p>{Math.floor(Math.min(Math.max(currentZoomVal, 1), 3) * 100)}%</p>
         </div>
         <div className="flex gap-1">
             <button 

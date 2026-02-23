@@ -32,7 +32,7 @@ const Home = () => {
           })
         }}
         transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        className="bg-green-500 grid place-items-center h-screen overflow-y-hidden hover:cursor-grab active:cursor-grabbing"
+        className="grid place-items-center h-screen overflow-y-hidden hover:cursor-grab active:cursor-grabbing"
       >
         {selected == "4x6" && 
           <motion.div 
