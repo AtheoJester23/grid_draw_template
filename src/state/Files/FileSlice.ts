@@ -13,6 +13,7 @@ type stateType = {
     delete: boolean,
     targetDelete: number | null,
     grayscale: boolean,
+    border: boolean
 }
 
 const initialState: stateType = {
@@ -21,7 +22,8 @@ const initialState: stateType = {
     download: false,
     delete: false,
     targetDelete: null,
-    grayscale: false
+    grayscale: false,
+    border: false
 }
 
 const FileSlice = createSlice({
@@ -45,9 +47,12 @@ const FileSlice = createSlice({
         },
         setGraycale(state, action){
             state.grayscale = action.payload
+        },
+        setBorder(state, action){
+            state.border = action.payload;
         }
     }
 })
 
-export const { setFiles, setNewFile, setDownload, setDelete, setDeleteTarget, setGraycale } = FileSlice.actions;
+export const { setFiles, setNewFile, setDownload, setDelete, setDeleteTarget, setGraycale, setBorder } = FileSlice.actions;
 export default FileSlice.reducer;

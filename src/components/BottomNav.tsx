@@ -59,8 +59,8 @@ const BottomNav = () => {
       {files.length > 0 && (
         <div className="px-2 flex gap-0.5 tabsContainer overflow-x-auto">
           {files.map((item, index) => (
-            <div className="relative">
-              <NavLink to={`tab/${index}`} key={index} className="tabsStyle inline-flex p-1 px-2 w-45 text-white rounded-t">
+            <div key={index} className="relative">
+              <NavLink to={`tab/${index}`} className="tabsStyle inline-flex p-1 px-2 w-45 text-white rounded-t">
                 <div className="w-full flex items-center justify-between">
                   <p className="truncate w-[80%]">{item.name}</p>
                 </div>

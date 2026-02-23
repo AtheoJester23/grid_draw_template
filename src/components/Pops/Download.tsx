@@ -12,7 +12,7 @@ type possibleErrors = {
     fileType: boolean
 }
 
-const Download = ({theRef}: {theRef: RefObject<HTMLDivElement> | RefObject<null>}) => {
+const Download = ({theRef, defName}: {theRef: RefObject<HTMLDivElement> | RefObject<null>, defName: string | null | undefined}) => {
     const [errors, setErrors] = useState<possibleErrors>({name: false, fileType: false})
     const isDownload = useSelector((state: RootState) => state.fileHolder.download);
     const dispatch = useDispatch<AppDispatch>()
@@ -85,6 +85,7 @@ const Download = ({theRef}: {theRef: RefObject<HTMLDivElement> | RefObject<null>
                                         className={`p-2 border ${errors.name === false ? "border-gray-500" : "border-red-500"} w-full`}
                                         placeholder="Untitled"
                                         name='name'
+                                        defaultValue={defName != undefined ? defName : "Idk"}
                                     />
                                 </div>
 

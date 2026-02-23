@@ -50,7 +50,6 @@ const NewFile = () => {
 
         if(Object.values(errs).includes(true)){
             setErrors(errs);
-            toast.error("Failed to create new file!")
             errs = {...errors}
             return;
         }
@@ -66,9 +65,9 @@ const NewFile = () => {
             dispatch(setFiles([...currentFiles, saveFile]))
         })
         
-        toast.success("New file created!", {
-            autoClose: 1000,
-        })
+        // toast.success("New file created!", {
+        //     autoClose: 1000,
+        // })
         dispatch(setNewFile(false))
 
         console.log(fileholder);
@@ -149,7 +148,6 @@ const NewFile = () => {
                 </DialogPanel>
             </motion.div>
         </Dialog> 
-        <ToastContainer theme='dark'/>
     </>
   )
 }

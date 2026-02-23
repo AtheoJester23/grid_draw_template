@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@layer utilities {
+  .phone4x6 {
+    @apply h-[100px] w-[167px] bg-red-500;
+  }
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar{
   width: 50px;
@@ -40,24 +46,37 @@ body{
   @apply hover:bg-gradient-to-b hover:from-[rgb(150,150,150)] to-[rgb(80,80,80)] border border-[rgb(80,80,80)] hover:border-[rgb(60,60,70)] duration-200
 }
 
-/* 4x6 */
-.regular4x6{
-  @apply h-[600px] w-[400px];
-}
-
-.phone4x6{
-  @apply h-[400px] w-[267px]
-}
 
 /* ------------------------------------------------- */
 /* Frame Sizes */
 /* ------------------------------------------------- */
+/* A4 */
+.frameSizeA4{
+  @apply max-sm:w-[380px] max-sm:h-[537px] h-[608px] w-[430px]
+};
+
+.phoneA4{
+  @apply w-[300px] h-[424px]
+};
+
+/* ------------------------------------------------- */
 /* 6x8: */
-/* Regular */
-.regular6x8{
-  @apply h-[600px] w-[450px]
+.frameSize6x8{
+  @apply max-sm:h-[494px] max-sm:w-[370px] h-[549px] w-[412px]
 }
 
-.regularA4{
-  @apply h-[608px] w-[430px]
+
+/* ------------------------------------------------- */
+/* 4x6 */
+.frameSize4x6{
+  @apply max-sm:h-[577px] max-sm:w-[385px] h-[600px] w-[400px];
+}
+
+
+/* ------------------------------------------------- */
+/* border Sizes */
+/* ------------------------------------------------- */
+/* 4x6 - half cm */
+.regular4x6halfcm{
+  @apply p-[19px]
 }

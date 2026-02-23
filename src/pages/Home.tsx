@@ -53,7 +53,6 @@ const Home = () => {
         </motion.div>
         <BottomNav/>
       </div>
-      <Download theRef={ref}/>
       <NewFile/>
       <DeleteWarning/>
     </>

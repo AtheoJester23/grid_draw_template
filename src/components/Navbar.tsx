@@ -35,6 +35,8 @@ const Navbar = () => {
         })
     }
 
+    const fileList = useSelector((state: RootState) => state.fileHolder.files)
+
   return (
     <div className='relative z-20'>
         <div className='absolute top-0 left-0 right-0 bg-[rgb(30,30,30)] flex flex-col gap-0.5'>
@@ -64,7 +66,11 @@ const Navbar = () => {
                         >
                             <DialogPanel className="flex flex-col gap-2 text-sm w-auto leading-none p-1 text-[rgb(23,23,23)] relative">
                                 <button onClick={()=> handleNew()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1'>New...</button>
-                                <button onClick={()=> handleDl()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1 text-gray-500'>Download</button>
+                                {fileList.length > 0 ? (
+                                    <button onClick={()=> handleDl()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1 text-[rgb(23,23,23)]'>Download</button>
+                                ):(
+                                    <div className='leading-none hover:bg-blue-500 px-5 py-1 text-gray-500 select-none'>Download</div>
+                                )}
                             </DialogPanel>
                         </motion.div>
                     </Dialog>
@@ -75,6 +81,7 @@ const Navbar = () => {
                 <div className='flex text-sm items-center gap-2'>
                     <label htmlFor="grids">Grids:</label>
                     <select className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'>
+                        <option value="none" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>None</option>
                         <option value="1x1 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>1x1 inch boxes</option>
                         <option value="2x2 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>2x2 inch boxes</option>
                         <option value="3x3 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>3x3 inch boxes</option>
@@ -85,7 +92,7 @@ const Navbar = () => {
                 <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
 
                 <div className='flex items-center gap-1'>
-                    <input type="checkbox" name='borderChkbx'/>
+                    <input type="checkbox" name='borderChkbx' onChange={(e) => console.log(e.currentTarget.value)}/>
                     <label htmlFor="borderChkbx">Border</label>
                 </div>
 
