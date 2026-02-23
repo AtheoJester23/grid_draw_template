@@ -8,6 +8,14 @@ body{
   @apply h-[35px] py-1 px-3 flex items-center text-[rgb(234,231,230)] bg-gradient-to-t from-[rgb(77,77,77)] to-[rgb(85,85,85)]
 }
 
+.tabsContainer{
+  @apply bg-gradient-to-t from-[rgb(35,35,35)] via-[rgb(50,50,50)] via-90% to-[rgb(90,90,90)] border-t-2 border-[rgb(25,25,25)]
+}
+
+.tabsStyle{
+  @apply bg-gradient-to-t from-[rgb(50,50,50)] via-[rgb(90,90,90)] via-90% to-[rgb(255,255,255)]
+}
+
 .gradientBtn{
   @apply hover:bg-gradient-to-b hover:from-[rgb(150,150,150)] to-[rgb(80,80,80)] border border-[rgb(80,80,80)] hover:border-[rgb(60,60,70)] duration-200
 }

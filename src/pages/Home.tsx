@@ -7,6 +7,7 @@ import { setFrame } from '../state/EditConfig/EditSlice';
 import Download from '../components/Pops/Download';
 import { Plus } from 'lucide-react';
 import NewFile from '../components/Pops/NewFile';
+import DeleteWarning from '../components/Pops/DeleteWarning';
 
 const Home = () => {
   const currentPosition = useSelector((state: RootState) => state.editFile.frame);
@@ -58,6 +59,7 @@ const Home = () => {
       </div>
       <Download theRef={ref}/>
       <NewFile/>
+      <DeleteWarning/>
     </>
   )
 }
