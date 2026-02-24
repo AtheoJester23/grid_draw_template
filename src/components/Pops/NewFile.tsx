@@ -3,9 +3,8 @@ import { motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import type { AppDispatch, RootState } from '../../state/store'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFiles, setNewFile } from '../../state/Files/FileSlice'
-import { useRef, useState, type FormEvent } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
+import { setCurrentTab, setFiles, setNewFile } from '../../state/Files/FileSlice'
+import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 type possibleErrs = {
@@ -20,13 +19,6 @@ const NewFile = () => {
     const openNew = useSelector((state: RootState) => state.fileHolder.newFile);
     const dispatch = useDispatch<AppDispatch>()
 
-    const checkboxRef = useRef<HTMLInputElement>(null)
-    const toggleCheckbox = () => {
-        if (checkboxRef.current) {
-        checkboxRef.current.checked = !checkboxRef.current.checked;
-        }
-    };
-
     const fileholder = useSelector((state: RootState) => state.fileHolder.files)
     const navigate = useNavigate();
 
@@ -37,7 +29,10 @@ const NewFile = () => {
         const name = formData.get("name") as string;
         const size = formData.get("size") as string;
         const border = formData.get("border");
-
+        const grid = formData.get("grid")
+        const bnw = formData.get("bnw");
+        const orientation = formData.get("orientation")
+        
         let errs = {...errors};
 
         if(!name || name.replace(/[ ]/g, "") == ""){
@@ -57,12 +52,16 @@ const NewFile = () => {
         const saveFile = {
             name,
             size,
-            border: border == "on" ? true : false
+            border,
+            grid,
+            bnw: bnw == "on" ? true : false,
+            orientation
         }
         
         dispatch((dispatch, getState) => {
             const currentFiles = getState().fileHolder.files;
             dispatch(setFiles([...currentFiles, saveFile]))
+            dispatch(setCurrentTab(currentFiles.length));
         })
         
         // toast.success("New file created!", {
@@ -128,15 +127,43 @@ const NewFile = () => {
                                     </select>
                                 </div>
 
-                                <div>
-                                    <button
-                                        type="button"
-                                        onClick={() => toggleCheckbox()}
-                                        className="flex items-center gap-2 p-2"
-                                    >
-                                    <input name="border" type="checkbox" ref={checkboxRef} />
-                                        <label>Border</label>
-                                    </button>
+                                <div className="flex gap-2 items-center">
+                                    <label htmlFor='border'>Border: </label>
+                                    <select name='border' className="w-full border border-gray-500 p-2">
+                                        <option value="none">None</option>
+                                        <option value="0.5 cm">0.5 cm</option>
+                                        <option value="1 cm">1 cm</option>
+                                        <option value="0.5 inch">0.5 inch</option>
+                                        <option value="1 inch">1 inch</option>
+                                    </select>
+                                </div>
+                                
+                                <div className="flex gap-2 items-center">
+                                    <label htmlFor='grid'>Grid: </label>
+                                    <select name='grid' className="w-full border border-gray-500 p-2">
+                                        <option value="none">None</option>
+                                        <option value="1x1 inches">1x1 inches</option>
+                                        <option value="2x2 inches">2x2 inches</option>
+                                        <option value="3x3 inches">3x3 inches</option>
+                                        <option value="4x4 inches">4x4 inches</option>
+                                    </select>
+                                </div>
+
+                                <div className='flex gap-3'>
+                                    <div className='flex gap-2'>
+                                        <input type="checkbox" name="bnw" id="bnw" />
+                                        <label htmlFor="bnw">Black & White...</label>
+                                    </div>
+                                    <div className='flex gap-3'>
+                                        <label htmlFor="portrait">
+                                            <input type="radio" name="orientation" id="portrait" value={"portrait"} defaultChecked/>
+                                            Portrait
+                                        </label>
+                                        <label htmlFor="landscape">
+                                            <input type="radio" name="orientation" id="landscape" value={"landscape"} />
+                                            Landscape
+                                        </label>
+                                    </div>
                                 </div>
                             </motion.div>
 

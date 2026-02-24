@@ -4,7 +4,7 @@ import { X } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from '../../state/store'
 import { setDownload } from '../../state/Files/FileSlice'
-import { useState, type FormEvent, type RefObject, type SubmitEventHandler } from 'react'
+import { useState, type FormEvent, type RefObject } from 'react'
 import { toJpeg, toPng } from 'html-to-image'
 
 type possibleErrors = {

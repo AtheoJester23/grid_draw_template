@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../state/store"
 import { setFrame, setZoom } from "../state/EditConfig/EditSlice"
 import { useRef } from "react"
-import { setDelete, setDeleteTarget } from "../state/Files/FileSlice"
-import { Link, NavLink } from "react-router-dom"
+import { setCurrentTab, setDelete, setDeleteTarget } from "../state/Files/FileSlice"
+import { NavLink } from "react-router-dom"
 
 const BottomNav = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -54,18 +54,22 @@ const BottomNav = () => {
     dispatch(setDelete(true))
   }
 
+  const handleSelectedTab = (target: number) => {
+    dispatch(setCurrentTab(target))
+  }
+
   return (
     <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-[1.6px] bg-[rgb(23,23,23)]">
       {files.length > 0 && (
         <div className="px-2 flex gap-0.5 tabsContainer overflow-x-auto">
           {files.map((item, index) => (
-            <div key={index} className="relative">
+            <div onClick={() => handleSelectedTab(index)} key={index} className="relative">
               <NavLink to={`tab/${index}`} className="tabsStyle inline-flex p-1 px-2 w-45 text-white rounded-t">
                 <div className="w-full flex items-center justify-between">
                   <p className="truncate w-[80%]">{item.name}</p>
                 </div>
               </NavLink>
-              <button onClick={() => activateDelete(index)} className="cursor-pointer absolute right-1 top-2 text-white hover:text-red-500 duration-100">
+              <button onClick={() => activateDelete(index)} className="cursor-pointer absolute right-1 top-2 text-white hover:text-red-900 duration-100">
                 <X size={20}/>
               </button>
             </div>

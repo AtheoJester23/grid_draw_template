@@ -3,7 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 type filesType = {
     name: null | string,
     size: null | string,
-    border: boolean,
+    border: "None" | "0.5 cm" | "1 cm" | "0.5 inch" | "1 inch",
+    grid: "None" | '1x1 inches' | '2x2 inches' | '3x3 inches' | '4x4 inches',
+    bnw: boolean,
+    orientation: 'portrait' | 'landscape'
 }
 
 type stateType = {
@@ -12,8 +15,8 @@ type stateType = {
     download: boolean,
     delete: boolean,
     targetDelete: number | null,
+    currentTab: number | null,
     grayscale: boolean,
-    border: boolean
 }
 
 const initialState: stateType = {
@@ -22,8 +25,8 @@ const initialState: stateType = {
     download: false,
     delete: false,
     targetDelete: null,
+    currentTab: null,
     grayscale: false,
-    border: false
 }
 
 const FileSlice = createSlice({
@@ -45,14 +48,14 @@ const FileSlice = createSlice({
         setDeleteTarget(state, action){
             state.targetDelete = action.payload
         },
+        setCurrentTab(state, action){
+            state.currentTab = action.payload
+        },
         setGraycale(state, action){
             state.grayscale = action.payload
         },
-        setBorder(state, action){
-            state.border = action.payload;
-        }
     }
 })
 
-export const { setFiles, setNewFile, setDownload, setDelete, setDeleteTarget, setGraycale, setBorder } = FileSlice.actions;
+export const { setFiles, setNewFile, setDownload, setDelete, setDeleteTarget, setCurrentTab, setGraycale } = FileSlice.actions;
 export default FileSlice.reducer;

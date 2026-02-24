@@ -1,18 +1,13 @@
 import {motion} from 'framer-motion'
-import { useRef, useState } from 'react'
-import type { FormEvent } from 'react'
+import { useState } from 'react'
 import { Dialog, DialogPanel} from '@headlessui/react';
-import { X } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../state/store';
-import { setDownload, setFiles, setGraycale, setNewFile } from '../state/Files/FileSlice';
-import { toast, ToastContainer } from 'react-toastify';
+import { setDownload, setNewFile } from '../state/Files/FileSlice';
+import { ToastContainer } from 'react-toastify';
+import ItemSettings from './ItemSettings';
+import { useLocation, useParams } from 'react-router-dom';
 
-type possibleErrs = {
-    name: boolean,
-    size: boolean,
-    border: boolean
-}
 
 const Navbar = () => {
     const [openFile, setOpenFile] = useState<boolean>(false)
@@ -28,23 +23,22 @@ const Navbar = () => {
         dispatch(setDownload(true))
     }
 
-    const handleBnW = () => {
-        dispatch((dispatch, getState) => {
-            const currentState = getState().fileHolder.grayscale;
-            dispatch(setGraycale(!currentState))
-        })
-    }
-
     const fileList = useSelector((state: RootState) => state.fileHolder.files)
 
+    const currentTab = useLocation()
+
+    const {tabNum} = useParams();
   return (
     <div className='relative z-20'>
-        <div className='absolute top-0 left-0 right-0 bg-[rgb(30,30,30)] flex flex-col gap-0.5'>
-            <motion.div 
-                className='navbarStyle'
-                initial={{ y: -100 }}
+        <motion.div 
+            className='absolute top-0 left-0 right-0 bg-[rgb(30,30,30)] flex flex-col gap-0.5'
+            initial={{ y: -100 }}
                 animate={{ y: 0 }}
-                transition={{ type: 'spring', stiffness: 30, duration: 0.5 }}  
+                transition={{ type: 'spring', stiffness: 30, duration: 0.5 }}
+        >
+            
+            <motion.div 
+                className='navbarStyle'  
             >
                 <img src="/logo.png" className="w-5 h-5 me-2" alt="" />
                 <div className='relative'>
@@ -77,34 +71,14 @@ const Navbar = () => {
                     <a href={"https://www.youtube.com/@AtheoCodes"} target='_blank' className={`gradientBtn leading-none px-3 py-[1.5px] ms-1 rounded text-sm`}>Tutorial</a>
                 </div>
             </motion.div>
+            
+            
             <div className='navbarStyle flex gap-4 border-b-2 border-[rgb(23,23,23)]'>
-                <div className='flex text-sm items-center gap-2'>
-                    <label htmlFor="grids">Grids:</label>
-                    <select className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'>
-                        <option value="none" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>None</option>
-                        <option value="1x1 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>1x1 inch boxes</option>
-                        <option value="2x2 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>2x2 inch boxes</option>
-                        <option value="3x3 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>3x3 inch boxes</option>
-                        <option value="4x4 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>4x4 inch boxes</option>
-                    </select>
-                </div>
-
-                <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
-
-                <div className='flex items-center gap-1'>
-                    <input type="checkbox" name='borderChkbx' onChange={(e) => console.log(e.currentTarget.value)}/>
-                    <label htmlFor="borderChkbx">Border</label>
-                </div>
-
-                <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
-                
-                <div className='flex items-center gap-1'>
-                    <input type="checkbox" name='bnwChkbx' onChange={() => handleBnW()}/>
-                    <label htmlFor="bnwChkbx" className='max-sm:hidden'>Black & White...</label>
-                    <label htmlFor="bnwChkbx" className='min-md:hidden'>B&W</label>
-                </div>
+                {fileList.length > 0 && currentTab.pathname.slice(0, 4) == "/tab" && (
+                    <ItemSettings/>
+                )}
             </div>
-        </div>
+        </motion.div>
 
         <ToastContainer theme='dark'/>
     </div>

@@ -1,7 +1,7 @@
 import { Dialog, DialogPanel } from "@headlessui/react"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../../state/store"
-import { setDelete, setDeleteTarget, setFiles } from "../../state/Files/FileSlice";
+import { setCurrentTab, setDelete, setDeleteTarget, setFiles } from "../../state/Files/FileSlice";
 import { motion } from 'framer-motion'
 import { TriangleAlert, X } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -21,18 +21,23 @@ const DeleteWarning = () => {
     const handleProceed = () => {
         dispatch((dispatch, getState) => {
             const currentFiles = getState().fileHolder.files;
-            const selectedTab = getState().fileHolder.targetDelete
-            
-            const filtered = currentFiles.filter((item, index) => index !== selectedTab)
+            const DeleteTargetIndex = getState().fileHolder.targetDelete
+            const currentTab = getState().fileHolder.currentTab
+
+            if(currentTab == DeleteTargetIndex){
+                dispatch(setCurrentTab(currentTab! - 1))
+            }
+
+            const filtered = currentFiles.filter((_, index) => index !== DeleteTargetIndex)
             
             dispatch(setFiles(filtered));
             dispatch(setDeleteTarget(null));
             dispatch(setDelete(false))
 
-            if(filtered.length > 0 && selectedTab! <= Number(tabNum)){
+            if(filtered.length > 0 && DeleteTargetIndex! <= Number(tabNum)){
                 navigate(`/tab/${Number(tabNum) - 1}`)
                 dispatch(setDeleteTarget(Number(tabNum) - 1));
-            }else if(filtered.length > 0 && selectedTab! > Number(tabNum)){
+            }else if(filtered.length > 0 && DeleteTargetIndex! > Number(tabNum)){
                 console.log("Do nothing")
             }else{
                 navigate('/')

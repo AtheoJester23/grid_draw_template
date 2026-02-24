@@ -2,9 +2,7 @@ import {motion} from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from '../state/store'
 import BottomNav from '../components/BottomNav';
-import { useRef, useState } from 'react';
 import { setFrame } from '../state/EditConfig/EditSlice';
-import Download from '../components/Pops/Download';
 import { Plus } from 'lucide-react';
 import NewFile from '../components/Pops/NewFile';
 import DeleteWarning from '../components/Pops/DeleteWarning';
@@ -14,14 +12,10 @@ const Home = () => {
   const currentPosition = useSelector((state: RootState) => state.editFile.frame);
   const zoomVal = useSelector((state: RootState) => state.editFile.zoom)
   const fileManager = useSelector((state: RootState) => state.fileHolder.files);
-  const ref = useRef(null);
-  const grayScale = useSelector((state: RootState) => state.fileHolder.grayscale)
 
   const dispatch = useDispatch<AppDispatch>()
   
   console.log(fileManager);
-
-  const [selected, setSelected] = useState("4x6s")
 
   return (
     <>
@@ -30,7 +24,7 @@ const Home = () => {
           drag
           dragMomentum={false}
           animate={{ scale: zoomVal, x: currentPosition.x, y: currentPosition.y }}
-          onDragEnd={(e, info) => {
+          onDragEnd={(_, info) => {
             dispatch((dispatch, getState) => {
               const currentPosition = getState().editFile.frame;
               dispatch(setFrame({
