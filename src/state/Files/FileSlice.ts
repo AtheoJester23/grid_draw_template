@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 type filesType = {
     name: null | string,
     size: null | string,
-    border: "None" | "0.5 cm" | "1 cm" | "0.5 inch" | "1 inch",
-    grid: "None" | '1x1 inches' | '2x2 inches' | '3x3 inches' | '4x4 inches',
+    border: "noBorder" | "halfCm" | "oneCm" | "halfInch" | "oneInch",
+    grid: "noGrid" | 'oneInchGrid' | 'twoInchGrid' | 'threeInchGrid' | 'fourInchGrid',
     bnw: boolean,
     orientation: 'portrait' | 'landscape'
 }

@@ -130,22 +130,22 @@ const NewFile = () => {
                                 <div className="flex gap-2 items-center">
                                     <label htmlFor='border'>Border: </label>
                                     <select name='border' className="w-full border border-gray-500 p-2">
-                                        <option value="none">None</option>
-                                        <option value="0.5 cm">0.5 cm</option>
-                                        <option value="1 cm">1 cm</option>
-                                        <option value="0.5 inch">0.5 inch</option>
-                                        <option value="1 inch">1 inch</option>
+                                        <option value="noBorder">None</option>
+                                        <option value="halfCm">0.5 cm</option>
+                                        <option value="oneCm">1 cm</option>
+                                        <option value="halfInch">0.5 inch</option>
+                                        <option value="oneInch">1 inch</option>
                                     </select>
                                 </div>
                                 
                                 <div className="flex gap-2 items-center">
                                     <label htmlFor='grid'>Grid: </label>
                                     <select name='grid' className="w-full border border-gray-500 p-2">
-                                        <option value="none">None</option>
-                                        <option value="1x1 inches">1x1 inches</option>
-                                        <option value="2x2 inches">2x2 inches</option>
-                                        <option value="3x3 inches">3x3 inches</option>
-                                        <option value="4x4 inches">4x4 inches</option>
+                                        <option value="noGrid">None</option>
+                                        <option value="oneInchGrid">1x1 inches</option>
+                                        <option value="twoInchGrid">2x2 inches</option>
+                                        <option value="threeInchGrid">3x3 inches</option>
+                                        <option value="fourInchGrid">4x4 inches</option>
                                     </select>
                                 </div>
 

@@ -69,14 +69,30 @@ body{
 /* ------------------------------------------------- */
 /* 4x6 */
 .frameSize4x6{
-  @apply max-sm:h-[577px] max-sm:w-[385px] h-[432px] w-[288px];
+  @apply max-sm:h-[577px] max-sm:w-[385px] h-[600px] w-[400px];
 }
 
 
 /* ------------------------------------------------- */
 /* border Sizes */
 /* ------------------------------------------------- */
-/* 4x6 - half cm */
-.regular4x6halfcm{
-  @apply p-[19px]
+/* 4x6 */
+.noBorder4x6{
+  @apply p-0
+}
+
+.halfCm4x6{
+  @apply p-[18.9px]
+}
+
+.oneCm4x6{
+  @apply p-[37.8px]
+}
+
+.halfInch4x6{
+  @apply p-[48px]
+}
+
+.oneInch4x6{
+  @apply p-[96px]
 }

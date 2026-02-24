@@ -30,11 +30,11 @@ const ItemSettings = () => {
                 const updatedGrid = fileList.map((item, index) => index == currentTab ? ({...item, grid: e.currentTarget.value}) : ({...item}))
                 dispatch(setFiles(updatedGrid));
             })} className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'>
-                <option value="none" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>None</option>
-                <option value="1x1 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>1x1 inch boxes</option>
-                <option value="2x2 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>2x2 inch boxes</option>
-                <option value="3x3 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>3x3 inch boxes</option>
-                <option value="4x4 inches" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>4x4 inch boxes</option>
+                <option value="noGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>None</option>
+                <option value="oneInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>1x1 inch boxes</option>
+                <option value="twoInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>2x2 inch boxes</option>
+                <option value="threeInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>3x3 inch boxes</option>
+                <option value="fourInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>4x4 inch boxes</option>
             </select>
         </div>
 
@@ -50,11 +50,11 @@ const ItemSettings = () => {
                 })} 
                 className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'
             >
-                <option value="none">None</option>
-                <option value="0.5 cm">0.5 cm</option>
-                <option value="1 cm">1 cm</option>
-                <option value="0.5 inch">0.5 inch</option>
-                <option value="1 inch">1 inch</option>
+                <option value="noBorder">None</option>
+                <option value="halfCm">0.5 cm</option>
+                <option value="oneCm">1 cm</option>
+                <option value="halfInch">0.5 inch</option>
+                <option value="oneInch">1 inch</option>
             </select>
         </div>
 
@@ -68,6 +68,13 @@ const ItemSettings = () => {
             <label htmlFor="bnwChkbx" className='max-sm:hidden'>Black & White...</label>
             <label htmlFor="bnwChkbx" className='min-md:hidden'>B&W</label>
         </div> 
+
+        <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
+
+        <div className='flex gap-2'>
+            <h1>Frame Size: </h1>
+            <p>{currentFile?.size}</p>
+        </div>
     </>
   )
 }

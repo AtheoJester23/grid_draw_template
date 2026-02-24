@@ -34,10 +34,11 @@ const CurrentTab = () => {
     <>
         <motion.div 
             ref={ref}
-            className={`frameSize${currentFile.size} ${currentFile.bnw == true && 'grayscale'} bg-green-500 flex justify-center items-center overflow-hidden`}
+            className={`frameSize${currentFile.size} ${currentFile.bnw == true && 'grayscale'} bg-white flex justify-center items-center overflow-hidden ${currentFile.border + currentFile.size}`}
         >
-            <div className={`content h-full w-full flex justify-center items-center ${currentFile.border && "border-[1.5px]"}`}>
-                <p>{currentFile.name}</p>
+            <div className={`content grid h-full w-full flex ${currentFile.border !== "noBorder" && "border-[1.5px]"}`}>
+                {/* Grids here */}
+                <p className="grid-cols-1">1</p>
             </div>
         </motion.div>
         <Download theRef={ref} defName={currentFile.name}/>
