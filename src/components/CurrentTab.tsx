@@ -34,7 +34,7 @@ const CurrentTab = () => {
     <>
         <motion.div 
             ref={ref}
-            className={`frameSize${currentFile.size} ${grayScale == true && 'grayscale'} bg-green-500 flex justify-center items-center overflow-hidden`}
+            className={`frameSize${currentFile.size} ${currentFile.bnw == true && 'grayscale'} bg-green-500 flex justify-center items-center overflow-hidden`}
         >
             <div className={`content h-full w-full flex justify-center items-center ${currentFile.border && "border-[1.5px]"}`}>
                 <p>{currentFile.name}</p>
