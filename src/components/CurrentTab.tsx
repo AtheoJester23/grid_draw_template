@@ -11,6 +11,8 @@ const CurrentTab = () => {
 
     const width = useMotionValue(200);
     const height = useMotionValue(200);
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
 
     const {tabNum} = useParams();
     const navigate = useNavigate()
@@ -64,9 +66,11 @@ const CurrentTab = () => {
                     style={{
                         width,
                         height,
+                        x,
+                        y,
                         position: "relative",
                     }}
-                    className={`overflow-hidden ${touched ? "border border-2 border-dashed border-gray-500 cursor-grab active:cursor-grabbing": ''}`}
+                    className={`overflow-hidden ${touched && "border border-2 border-dashed border-gray-500 cursor-grab active:cursor-grabbing"}`}
                     onMouseDown={() => setTouched(true)}  // click or hold starts here
                 >
 
@@ -92,8 +96,69 @@ const CurrentTab = () => {
                             width.set(newWidth);
                             height.set(newWidth / aspectRatio)
                         }}
-                        className="w-4 h-4 bg-blue-500 absolute bottom-0 right-0 cursor-se-resize"
+                        className={`w-4 h-4 absolute bottom-[0] right-[0] cursor-se-resize`}
                     />
+
+                    {/* Resize Handle (bottom-left) */}
+                    <motion.div
+                        drag
+                        dragMomentum={false}
+                        dragElastic={0}
+                        dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
+                        onDrag={(event, info) => {
+                            const delta = info.delta.x
+                            const aspectRatio = 1;
+                            const newWidth = Math.max(100, width.get() - delta);
+                            
+                            x.set(x.get() + delta);
+                            
+                            width.set(newWidth);
+                            height.set(newWidth / aspectRatio)
+                        }}
+                        className={`w-4 h-4 absolute bottom-[0] left-[0] cursor-sw-resize`}
+                    />
+
+                    {/* Resize Handle (top-left) */}
+                    <motion.div
+                        drag
+                        dragMomentum={false}
+                        dragElastic={0}
+                        dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
+                        onDrag={(event, info) => {
+                            const dx = info.delta.x
+                            const dy = info.delta.y;
+                            const aspectRatio = 1;
+                            const newWidth = Math.max(100, width.get() - dx);
+                        
+                            x.set(x.get() + dx)
+                            y.set(y.get() + dy)
+
+                            width.set(newWidth);
+                            height.set(newWidth / aspectRatio)
+                        }}
+                        className={`w-4 h-4 absolute top-[0] left-[0] cursor-nw-resize`}
+                    />
+                    
+                    {/* Resize Handle (top-right) */}
+                    <motion.div
+                        drag
+                        dragMomentum={false}
+                        dragElastic={0}
+                        dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
+                        onDrag={(event, info) => {
+                            const dx = info.delta.x
+                            const dy = info.delta.y;
+                            const aspectRatio = 1;
+                            const newWidth = Math.max(100, width.get() + dx);
+                        
+                            y.set(y.get() + dy)
+
+                            width.set(newWidth);
+                            height.set(newWidth / aspectRatio)
+                        }}
+                        className={`w-4 h-4 absolute top-[0] right-[0] cursor-ne-resize`}
+                    />
+                
                 </motion.div>
             </div>
         </motion.div>
