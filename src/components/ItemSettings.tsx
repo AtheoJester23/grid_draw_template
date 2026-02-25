@@ -128,14 +128,20 @@ const ItemSettings = () => {
                         </select>
                     </div>
 
-                    <div className='flex items-center gap-1'>
-                        <input type="checkbox" name='bnwChkbx' onChange={(e) => dispatch((dispatch, _) => {
-                            const updatedBnw = fileList.map((item, index) => index == currentTab ? ({...item, bnw: e.currentTarget.checked}) : ({...item}) )
+                    <label htmlFor='checkbox' className="flex items-center gap-1 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            checked={currentFile?.bnw}
+                            onChange={(e) => dispatch((dispatch, _) => {
+                            const updatedBnw = fileList.map((item, index) =>
+                                index == currentTab ? { ...item, bnw: e.currentTarget.checked } : { ...item }
+                            );
                             dispatch(setFiles(updatedBnw));
-                        })} checked={currentFile?.bnw}/>
-                        <label htmlFor="bnwChkbx" className='max-sm:hidden'>Black & White...</label>
-                        <label htmlFor="bnwChkbx" className='min-md:hidden'>B&W</label>
-                    </div> 
+                            })}
+                        />
+                        <span className="max-sm:hidden">Black & White...</span>
+                        <span className="min-md:hidden">B&W</span>
+                    </label>
 
                     <div className='flex gap-2'>
                         <h1>Frame Size: </h1>

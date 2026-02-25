@@ -62,14 +62,14 @@ body{
 /* ------------------------------------------------- */
 /* 6x8: */
 .frameSize6x8{
-  @apply max-sm:h-[494px] max-sm:w-[370px] h-[549px] w-[412px]
+  @apply max-sm:h-[494px] max-sm:w-[370px] h-[600px] w-[450px]
 }
 
 
 /* ------------------------------------------------- */
 /* 4x6 */
 .frameSize4x6{
-  @apply max-sm:h-[577px] max-sm:w-[385px] h-[600px] w-[400px];
+  @apply max-sm:h-[577px] max-sm:w-[385px] h-[576px] w-[384px];
 }
 
 
@@ -95,4 +95,27 @@ body{
 
 .oneInch4x6{
   @apply p-[96px]
+}
+/* ------------------------------------------------- */
+/* Grid Sizes */
+/* ------------------------------------------------- */
+/* 4x6 */
+.noGrid4x6{
+  display: none;
+}
+
+.grid4x6{
+  display: grid;
+  grid-template-columns: 96px 96px 96px 96px;
+  grid-template-rows: 96px 96px 96px 96px 96px 96px;
+  border: solid;
+  border-width: 1px;
+}
+
+.grid6x8{
+  display: grid;
+  grid-template-columns: 75px 75px 75px 75px 75px 75px;
+  grid-template-rows: 75px 75px 75px 75px 75px 75px 75px 75px;
+  border: solid;
+  border-width: 1px;
 }

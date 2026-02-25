@@ -56,7 +56,89 @@ const CurrentTab = () => {
             ref={ref}
             className={`frameSize${currentFile.size} ${currentFile.bnw == true && 'grayscale'} bg-white flex justify-center items-center ${currentFile.border + currentFile.size} cursor-default`}
         >
-            <div className={`${touched ? "" : "overflow-hidden"} content grid h-full w-full flex ${currentFile.border !== "noBorder" && "border-[1.5px]"}`}>
+            <div className={`relative ${touched ? "" : "overflow-hidden"} content grid h-full w-full flex ${currentFile.border !== "noBorder" && "border-[1.5px]"}`}>
+                {currentFile.size == "4x6" ? (
+                    <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.size} z-20 pointer-events-none`}>
+                        <div className="border-e"/>
+                        <div className="border-e"/>
+                        <div className="border-e"/>
+                        <div className=""/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                    </div>
+                ): currentFile.size == "6x8" ?(
+                    <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.size} z-20 pointer-events-none`}>
+                        <div className="border-e"/>
+                        <div className="border-e"/>
+                        <div className="border-e"/>
+                        <div className="border-e"/>
+                        <div className="border-e"/>
+                        <div />
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t border-e"/>
+                        <div className="border-t"/>
+                        
+                    </div>
+                ): (
+                    null
+                )}
                 {/* Grids here */}
                 <motion.div
                     onClick={() => setTouched(true)}
@@ -70,7 +152,7 @@ const CurrentTab = () => {
                         y,
                         position: "relative",
                     }}
-                    className={`overflow-hidden ${touched && "border border-2 border-dashed border-gray-500 cursor-grab active:cursor-grabbing"}`}
+                    className={`z-10 overflow-hidden ${touched && "border border-2 border-dashed border-gray-500 cursor-grab active:cursor-grabbing"}`}
                     onMouseDown={() => setTouched(true)}  // click or hold starts here
                 >
 
@@ -160,6 +242,7 @@ const CurrentTab = () => {
                     />
                 
                 </motion.div>
+                
             </div>
         </motion.div>
         <Download theRef={ref} defName={currentFile.name}/>
