@@ -34,7 +34,7 @@ const Home = () => {
             })
           }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          className="grid place-items-center h-screen overflow-y-hidden hover:cursor-grab active:cursor-grabbing"
+          className="grid place-items-center h-screen hover:cursor-grab active:cursor-grabbing"
         >
           {fileManager.length < 1 ? (
             <div className='flex flex-col text-gray-500 justify-center items-center p-5 border border-3 border-gray-500 border-dashed rounded h-[70%] w-[70%]'>

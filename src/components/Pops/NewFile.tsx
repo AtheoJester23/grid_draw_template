@@ -30,7 +30,6 @@ const NewFile = () => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
-        const fileReader = new FileReader();
         
         const name = formData.get("name") as string;
         const size = formData.get("size") as string;
@@ -48,6 +47,10 @@ const NewFile = () => {
         if(!size || size.replace(/[ ]/g, "") == ""){
             errs.size = true
         }
+        
+        if(!imagePrev){
+            errs.pic = true
+        }
 
         if(Object.values(errs).includes(true)){
             setErrors(errs);
@@ -60,6 +63,7 @@ const NewFile = () => {
             size,
             border,
             grid,
+            pic: imagePrev,
             bnw: bnw == "on" ? true : false,
             orientation
         }
@@ -76,6 +80,10 @@ const NewFile = () => {
         dispatch(setNewFile(false))
 
         console.log(fileholder);
+
+        setImagePrev(null);
+        setImageName(null);
+        fileInputRef.current!.value = "";
 
         navigate(`/tab/${fileholder.length}`)
     }
@@ -97,6 +105,7 @@ const NewFile = () => {
             if(typeof result === "string"){
                 setImagePrev(result)
                 setImageName(file.name)
+                setErrors((prev) => ({...prev, pic: false}))
             }
         }
     }
@@ -145,13 +154,18 @@ const NewFile = () => {
                             <motion.div className="flex flex-1 flex-col gap-3">
                                 <div className="flex gap-2 items-center">
                                     <label htmlFor="name">Name: </label>
-                                    <input
-                                        type="text"
-                                        onChange={() => setErrors(prev => ({...prev, name: false}))}
-                                        className={`p-2 border ${errors.name === false ? "border-gray-500" : "border-red-500"} w-full`}
-                                        placeholder="Untitled"
-                                        name='name'
-                                    />
+                                    <div className='w-full'>
+                                        <input
+                                            type="text"
+                                            onChange={() => setErrors(prev => ({...prev, name: false}))}
+                                            className={`p-2 border ${errors.name === false ? "border-gray-500" : "border-red-500"} w-full`}
+                                            placeholder="Untitled"
+                                            name='name'
+                                        />
+                                        {errors.name && (
+                                            <small className='text-red-500'>Name is required</small>
+                                        )}
+                                    </div>
                                 </div>
 
                                 <div className="flex gap-2 items-center">
@@ -186,26 +200,31 @@ const NewFile = () => {
                                 </div>
 
                                 {!imagePrev ? (
-                                    <div className="border-2 border-dashed border-gray-500 text-gray-500 flex justify-center items-center h-40">
-                                        <label
-                                            htmlFor="pic"
-                                            className="flex flex-col justify-center items-center text-gray-500 text-xl cursor-pointer w-full h-full rounded-md"
-                                        >
-                                            <Upload/>
-                                            <span>Choose Picture</span>
-                                            <input
-                                                ref={fileInputRef}
-                                                type="file"
-                                                name="pic"
-                                                id="pic"
-                                                accept='image/*'
-                                                className="hidden"
-                                                onChange={(e) => handlePickPic(e)}
-                                            />
-                                        </label>
-                                    </div>
+                                    <>
+                                        <div className={`border-2 border-dashed ${errors.pic == true ? "border-red-500" : "border-gray-500"} text-gray-500 flex justify-center items-center h-40`}>
+                                            <label
+                                                htmlFor="pic"
+                                                className="flex flex-col justify-center items-center text-gray-500 text-xl cursor-pointer w-full h-full rounded-md"
+                                            >
+                                                <Upload/>
+                                                <span>Choose Picture</span>
+                                                <input
+                                                    ref={fileInputRef}
+                                                    type="file"
+                                                    name="pic"
+                                                    id="pic"
+                                                    accept='image/*'
+                                                    className="hidden"
+                                                    onChange={(e) => handlePickPic(e)}
+                                                />
+                                            </label>
+                                        </div>
+                                        {errors.pic && (
+                                            <small className='text-red-500 text-sm leading-none'>Image is requried*</small>
+                                        )}
+                                    </>
                                 ):(
-                                    <div className='flex flex-col p-2 w-full justify-center items-center border border-dashed border-2 relative cursor-default'>
+                                    <div className={`flex flex-col p-2 w-full justify-center items-center border border-dashed border-2 relative cursor-default`}>
                                         <div className='h-[200px] w-[400px] flex gap-2'> 
                                             <img src={imagePrev} alt="Preview" className='w-full h-full object-contain'/>
                                         </div>
@@ -240,7 +259,7 @@ const NewFile = () => {
 
                             <div className='flex flex-col gap-2 '>
                                 <button className='px-5 py-2 border w-full border-blue-500 hover:shadow-none shadow-[inset_0_0_10px_rgba(59,130,246,0.5)] duration-300'>Continue</button>
-                                <button type='button' onClick={() => dispatch(setNewFile(false))} className='px-5 py-2 border border-gray-500 hover:border-blue-500 hover:bg-blue-100 w-full duration-300'>Cancel</button>
+                                <button type='button' onClick={() => dispatch(setNewFile(false))} className={`px-5 py-2 border hover:border-blue-500 hover:bg-blue-100 w-full duration-300`}>Cancel</button>
                             </div>
                         </motion.form>
                 </DialogPanel>

@@ -41,6 +41,8 @@ const Download = ({theRef, defName}: {theRef: RefObject<HTMLDivElement> | RefObj
         link.download = name ?? `Untitled.${fileType}`;
         link.href = dataUrl;
         link.click();
+
+        dispatch(setDownload(false))
     };
 
   return (

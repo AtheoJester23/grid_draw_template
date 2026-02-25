@@ -6,7 +6,7 @@ type filesType = {
     border: "noBorder" | "halfCm" | "oneCm" | "halfInch" | "oneInch",
     grid: "noGrid" | 'oneInchGrid' | 'twoInchGrid' | 'threeInchGrid' | 'fourInchGrid',
     bnw: boolean,
-    image: File,
+    pic: string,
     orientation: 'portrait' | 'landscape'
 }
 
