@@ -89,7 +89,7 @@ const ItemSettings = () => {
             <FileCog/>
         </button>
         
-        <Dialog open={openFileSettings} onClose={() => setOpenFileSettings(false)} className='absolute flex justify-center items-center left-0 right-0 bottom-0 top-0'>                
+        <Dialog open={openFileSettings} onClose={() => setOpenFileSettings(false)} className='absolute flex justify-center items-center left-0 right-0 bottom-0 top-0 z-30'>                
             <DialogPanel className={'bg-white p-5 rounded shadow-lg w-[80%] border border-gray-500'}>
                 <div className='flex flex-col gap-2'>
                     <div className='flex text-sm items-center gap-2'>

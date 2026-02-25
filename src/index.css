@@ -62,14 +62,14 @@ body{
 /* ------------------------------------------------- */
 /* 6x8: */
 .frameSize6x8{
-  @apply max-sm:h-[494px] max-sm:w-[370px] h-[600px] w-[450px]
+  @apply max-sm:h-[512px] max-sm:w-[384px] h-[600px] w-[450px]
 }
 
 
 /* ------------------------------------------------- */
 /* 4x6 */
 .frameSize4x6{
-  @apply max-sm:h-[577px] max-sm:w-[385px] h-[576px] w-[384px];
+  @apply h-[576px] w-[384px];
 }
 
 
@@ -104,10 +104,34 @@ body{
   display: none;
 }
 
-.grid4x6{
+.gridoneInchGrid4x6{
   display: grid;
   grid-template-columns: 96px 96px 96px 96px;
   grid-template-rows: 96px 96px 96px 96px 96px 96px;
+  border: solid;
+  border-width: 1px;
+}
+
+.gridtwoInchGrid4x6{
+  display: grid;
+  grid-template-columns: 192px 192px;
+  grid-template-rows: 192px 192px 192px;
+  border: solid;
+  border-width: 1px;
+}
+
+.gridthreeInchGrid4x6{
+  display: grid;
+  grid-template-columns: 288px 96px;
+  grid-template-rows: 288px 288px;
+  border: solid;
+  border-width: 1px;
+}
+
+.gridfourInchGrid4x6{
+  display: grid;
+  grid-template-columns: 384px;
+  grid-template-rows: 384px;
   border: solid;
   border-width: 1px;
 }

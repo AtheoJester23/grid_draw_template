@@ -4,6 +4,7 @@ import type { RootState } from "../state/store";
 import { motion, useMotionValue } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
 import Download from "./Pops/Download";
+import { current } from "@reduxjs/toolkit";
 
 const CurrentTab = () => {
     const containerRef = useRef<HTMLDivElement>(null)
@@ -57,34 +58,64 @@ const CurrentTab = () => {
             className={`frameSize${currentFile.size} ${currentFile.bnw == true && 'grayscale'} bg-white flex justify-center items-center ${currentFile.border + currentFile.size} cursor-default`}
         >
             <div className={`relative ${touched ? "" : "overflow-hidden"} content grid h-full w-full flex ${currentFile.border !== "noBorder" && "border-[1.5px]"}`}>
-                {currentFile.size == "4x6" ? (
-                    <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.size} z-20 pointer-events-none`}>
-                        <div className="border-e"/>
-                        <div className="border-e"/>
-                        <div className="border-e"/>
-                        <div className=""/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t border-e"/>
-                        <div className="border-t"/>
-                    </div>
-                ): currentFile.size == "6x8" ?(
+                {currentFile.size == "4x6" && (
+                    <>
+                        {currentFile.grid == "oneInchGrid" ? (
+                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                <div className="border-e"/>
+                                <div className="border-e"/>
+                                <div className="border-e"/>
+                                <div className=""/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t"/>
+                            </div>
+                        ): currentFile.grid == "twoInchGrid" ? (
+                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                <div className="border-e"/>
+                                <div className=""/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t"/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t"/>
+                            </div>
+                        ): currentFile.grid == "threeInchGrid" ? (
+                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                <div className="border-e"/>
+                                <div className=""/>
+                                <div className="border-t border-e"/>
+                                <div className="border-t"/>
+                            </div>
+                        ): currentFile.grid == "fourInchGrid" ? (
+                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                <div className="border-e"/>
+                                <div className=""/>
+                                <div className="border-t border-e"/>
+                            </div>
+                        ):(
+                            null
+                        )}
+                    </>
+                )}
+
+                {currentFile.size == "6x8" ? (
                     <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.size} z-20 pointer-events-none`}>
                         <div className="border-e"/>
                         <div className="border-e"/>
@@ -133,12 +164,12 @@ const CurrentTab = () => {
                         <div className="border-t border-e"/>
                         <div className="border-t border-e"/>
                         <div className="border-t border-e"/>
-                        <div className="border-t"/>
-                        
+                        <div className="border-t"/>  
                     </div>
-                ): (
+                ):(
                     null
                 )}
+                
                 {/* Grids here */}
                 <motion.div
                     onClick={() => setTouched(true)}
