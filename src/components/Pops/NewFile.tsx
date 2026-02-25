@@ -1,20 +1,24 @@
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { motion } from 'framer-motion'
-import { X } from 'lucide-react'
+import { Upload, X } from 'lucide-react'
 import type { AppDispatch, RootState } from '../../state/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentTab, setFiles, setNewFile } from '../../state/Files/FileSlice'
-import { useState, type FormEvent } from 'react'
+import React, { useRef, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 type possibleErrs = {
     name: boolean,
     size: boolean,
-    border: boolean
+    border: boolean,
+    pic: boolean,
 }
 
 const NewFile = () => {
-    const [errors, setErrors] = useState<possibleErrs>({name: false, size: false, border: false})
+    const [errors, setErrors] = useState<possibleErrs>({name: false, size: false, border: false, pic: false})
+    const [imagePrev, setImagePrev] = useState<string | null>(null)
+    const [imageName, setImageName] = useState<string | null>(null)
+    const fileInputRef = useRef<HTMLInputElement | null>(null)
 
     const openNew = useSelector((state: RootState) => state.fileHolder.newFile);
     const dispatch = useDispatch<AppDispatch>()
@@ -26,13 +30,15 @@ const NewFile = () => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
+        const fileReader = new FileReader();
+        
         const name = formData.get("name") as string;
         const size = formData.get("size") as string;
         const border = formData.get("border");
         const grid = formData.get("grid")
         const bnw = formData.get("bnw");
         const orientation = formData.get("orientation")
-        
+
         let errs = {...errors};
 
         if(!name || name.replace(/[ ]/g, "") == ""){
@@ -72,6 +78,27 @@ const NewFile = () => {
         console.log(fileholder);
 
         navigate(`/tab/${fileholder.length}`)
+    }
+
+    const handlePickPic = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.currentTarget.files?.[0];
+        if(!file) return;
+
+        if(!file.type.startsWith('image/')){
+            alert("Please select an image file!");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onloadend = () => {
+            const result = reader.result;
+            if(typeof result === "string"){
+                setImagePrev(result)
+                setImageName(file.name)
+            }
+        }
     }
 
   return (
@@ -149,6 +176,39 @@ const NewFile = () => {
                                     </select>
                                 </div>
 
+                                {!imagePrev ? (
+                                    <div className="border-2 border-dashed border-gray-500 text-gray-500 flex justify-center items-center h-40">
+                                        <label
+                                            htmlFor="pic"
+                                            className="flex flex-col justify-center items-center text-gray-500 text-xl cursor-pointer w-full h-full rounded-md"
+                                        >
+                                            <Upload/>
+                                            <span>Choose Picture</span>
+                                            <input
+                                                ref={fileInputRef}
+                                                type="file"
+                                                name="pic"
+                                                id="pic"
+                                                accept='image/*'
+                                                className="hidden"
+                                                onChange={(e) => handlePickPic(e)}
+                                            />
+                                        </label>
+                                    </div>
+                                ):(
+                                    <div className='flex flex-col p-2 w-full justify-center items-center border border-dashed border-2 relative cursor-default'>
+                                        <div className='h-[200px] w-[400px] flex gap-2'> 
+                                            <img src={imagePrev} alt="Preview" className='w-full h-full object-contain'/>
+                                        </div>
+                                        <div className='flex w-full items-center justify-center'>
+                                            <p className='p-2 truncate'>{imageName}</p>
+                                        </div>
+                                        <button onClick={() => handleRemovePic()} className='absolute top-2 right-2 hover:translate-y-0.25 cursor-pointer duration-200'>
+                                            <X/>
+                                        </button>
+                                    </div>
+                                )}
+
                                 <div className='flex gap-3'>
                                     <div className='flex gap-2'>
                                         <input type="checkbox" name="bnw" id="bnw" />
@@ -165,7 +225,9 @@ const NewFile = () => {
                                         </label>
                                     </div>
                                 </div>
+
                             </motion.div>
+
 
                             <div className='flex flex-col gap-2 '>
                                 <button className='px-5 py-2 border w-full border-blue-500 hover:shadow-none shadow-[inset_0_0_10px_rgba(59,130,246,0.5)] duration-300'>Continue</button>
