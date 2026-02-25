@@ -7,11 +7,14 @@
 }
 
 :root {
+  /* 4x6 */
   --oneInch4x6: 96px;
   --twoInch4x6: 192px;
   --threeInch4x6: 288px;
   --fourInch4x6: 384px;
   --regOnegrid6x8: 75px;
+  
+  /* 6x8 */
   --regTwogrid6x8: 150px;
   --regThreegrid6x8: 225px;
   --regFourgrid6x8: 300px;
@@ -19,6 +22,13 @@
   --phnTwogrid6x8: 128px;
   --phnThreegrid6x8: 192px;
   --phnFourgrid6x8: 256px;
+  
+  /* A4 */
+  --regOnegridA4: 51.6px;
+  --regTwogridA4: 103.2px;
+  --regThreegridA4: 154.8px;
+  --regFourgridA4: 206.4px
+
 }
 
 /* Scrollbar */
@@ -67,11 +77,7 @@ body{
 /* ------------------------------------------------- */
 /* A4 */
 .frameSizeA4{
-  @apply max-sm:w-[380px] max-sm:h-[537px] h-[608px] w-[430px]
-};
-
-.phoneA4{
-  @apply w-[300px] h-[424px]
+  @apply max-sm:w-[380px] max-sm:h-[537px] h-[603.71px] w-[426.73px]
 };
 
 /* ------------------------------------------------- */
@@ -131,6 +137,27 @@ body{
 
 .oneInch6x8{
   @apply max-sm:p-[64px] p-[75px]
+}
+
+/* A4 */
+.noBorderA4{
+  @apply p-0
+}
+
+.halfCmA4{
+  @apply p-[10.15px]
+}
+
+.oneCmA4{
+  @apply p-[20.3px]
+}
+
+.halfInchA4{
+  @apply p-[25.8px]
+}
+
+.oneInchA4{
+  @apply p-[51.6px]
 }
 
 /* ------------------------------------------------- */
@@ -210,4 +237,30 @@ body{
       grid-template-columns: var(--phnFourgrid6x8) var(--phnTwogrid6x8);
       grid-template-rows: repeat(2, var(--phnFourgrid6x8))
     }
+}
+
+/* A4 */
+
+.gridoneInchGridA4{
+  display: grid;
+  grid-template-columns: repeat(8, var(--regOnegridA4)) 13.93px;
+  grid-template-rows: repeat(11, var(--regOnegridA4)) 36.11px;
+}
+
+.gridtwoInchGridA4{
+  display: grid;
+  grid-template-columns: repeat(4, var(--regTwogridA4)) 13.93px;
+  grid-template-rows: repeat(6, var(--regTwogridA4));
+}
+
+.gridthreeInchGridA4{
+  display: grid;
+  grid-template-columns: repeat(3, var(--regThreegridA4));
+  grid-template-rows: repeat(4, var(--regThreegridA4));
+}
+
+.gridfourInchGridA4{
+  display: grid;
+  grid-template-columns: repeat(2, var(--regFourgridA4)) 13.93px;
+  grid-template-rows: repeat(3, var(--regFourgridA4));
 }
