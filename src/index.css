@@ -16,6 +16,9 @@
   --regThreegrid6x8: 225px;
   --regFourgrid6x8: 300px;
   --phnOnegrid6x8: 64px;
+  --phnTwogrid6x8: 128px;
+  --phnThreegrid6x8: 192px;
+  --phnFourgrid6x8: 256px;
 }
 
 /* Scrollbar */
@@ -188,5 +191,23 @@ body{
       display: grid;
       grid-template-columns: repeat(6, var(--phnOnegrid6x8));
       grid-template-rows: repeat(8, var(--phnOnegrid6x8));
+    }
+
+    .gridtwoInchGrid6x8{
+      display: grid;
+      grid-template-columns: repeat(3, var(--phnTwogrid6x8));
+      grid-template-rows: repeat(4, var(--phnTwogrid6x8));
+    }
+
+    .gridthreeInchGrid6x8{
+      display: grid;
+      grid-template-columns: repeat(2, var(--phnThreegrid6x8)) ;
+      grid-template-rows: var(--phnThreegrid6x8) var(--phnThreegrid6x8) 128px;
+    }
+
+    .gridfourInchGrid6x8{
+      display: grid;
+      grid-template-columns: var(--phnFourgrid6x8) var(--phnTwogrid6x8);
+      grid-template-rows: repeat(2, var(--phnFourgrid6x8))
     }
 }
