@@ -101,6 +101,15 @@ const NewFile = () => {
         }
     }
 
+    const handleRemovePic = () => {
+        setImageName(null);
+        setImagePrev(null);
+
+        if(fileInputRef.current){
+            fileInputRef.current.value = "";
+        }
+    }
+
   return (
     <>
         <Dialog open={openNew} onClose={() => dispatch(setNewFile(false))}>
