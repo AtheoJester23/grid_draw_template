@@ -1,4 +1,4 @@
-import { Minus, Plus, RotateCcw, X } from "lucide-react"
+import { AlignCenterVertical, Minus, Plus, RotateCcw, Undo2, X } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../state/store"
 import { setFrame, setZoom } from "../state/EditConfig/EditSlice"
@@ -76,7 +76,10 @@ const BottomNav = () => {
           ))}
         </div>
       )}
-      <div className='text-sm navbarStyle flex justify-end'>
+      <div className='text-sm navbarStyle flex justify-between'>
+        <div>
+          <AlignCenterVertical/>
+        </div>
         <div className="flex items-center gap-1">
           <button onClick={handleResetFrame} className="select-none gradientBtn px-2 hover:cursor-pointer duration-300" >
             <RotateCcw size={20}/>

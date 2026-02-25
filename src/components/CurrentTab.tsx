@@ -52,7 +52,7 @@ const CurrentTab = () => {
     <>
         <motion.div 
             ref={ref}
-            className={`frameSize${currentFile.size} ${currentFile.bnw == true && 'grayscale'} bg-white flex justify-center items-center ${currentFile.border + currentFile.size}`}
+            className={`frameSize${currentFile.size} ${currentFile.bnw == true && 'grayscale'} bg-white flex justify-center items-center ${currentFile.border + currentFile.size} cursor-default`}
         >
             <div className={`${touched ? "" : "overflow-hidden"} content grid h-full w-full flex ${currentFile.border !== "noBorder" && "border-[1.5px]"}`}>
                 {/* Grids here */}
@@ -66,34 +66,34 @@ const CurrentTab = () => {
                         height,
                         position: "relative",
                     }}
-                    className={`overflow-hidden ${touched ? "border border-2 border-dashed border-gray-500": ''}`}
+                    className={`overflow-hidden ${touched ? "border border-2 border-dashed border-gray-500 cursor-grab active:cursor-grabbing": ''}`}
                     onMouseDown={() => setTouched(true)}  // click or hold starts here
                 >
 
-                {/* Image */}
-                <motion.img
-                    src={currentFile.pic}
-                    alt="Resizable"
-                    style={{ width: "100%", height: "100%", objectFit: "contain" }}
-                    draggable={false}
-                    className={`${touched ? "opacity-80" : ""} pointer-events-none`}
-                />
+                    {/* Image */}
+                    <motion.img
+                        src={currentFile.pic}
+                        alt="Resizable"
+                        style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                        draggable={false}
+                        className={`${touched ? "opacity-80" : ""} pointer-events-none`}
+                    />
 
-                {/* Resize Handle (bottom-right) */}
-                <motion.div
-                    drag
-                    dragMomentum={false}
-                    dragElastic={0}
-                    dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
-                    onDrag={(event, info) => {
-                        const delta = info.delta.x
-                        const aspectRatio = 1;
-                        const newWidth = Math.max(100, width.get() + delta);
-                        width.set(newWidth);
-                        height.set(newWidth / aspectRatio)
-                    }}
-                    className="w-4 h-4 bg-blue-500 absolute bottom-0 right-0 cursor-se-resize"
-                />
+                    {/* Resize Handle (bottom-right) */}
+                    <motion.div
+                        drag
+                        dragMomentum={false}
+                        dragElastic={0}
+                        dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
+                        onDrag={(event, info) => {
+                            const delta = info.delta.x
+                            const aspectRatio = 1;
+                            const newWidth = Math.max(100, width.get() + delta);
+                            width.set(newWidth);
+                            height.set(newWidth / aspectRatio)
+                        }}
+                        className="w-4 h-4 bg-blue-500 absolute bottom-0 right-0 cursor-se-resize"
+                    />
                 </motion.div>
             </div>
         </motion.div>

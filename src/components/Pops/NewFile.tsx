@@ -126,13 +126,13 @@ const NewFile = () => {
             <motion.div
                 drag
                 dragMomentum={false}
-                className="fixed top-20 left-1/2 -translate-x-1/2 max-sm:w-auto w-[50%] shadow-xl cursor-grab active:cursor-grabbing z-30"
+                className="fixed top-20 left-1/2 -translate-x-1/2 border border-gray-500 max-sm:w-[80%] w-[50%] shadow-xl cursor-grab active:cursor-grabbing z-30"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ type: "tween", duration: 0.3 }}
             >
-                <DialogPanel className="text-sm w-auto leading-none p-1 text-[rgb(23,23,23)] relative bg-white">
+                <DialogPanel className="text-sm w-full leading-none p-1 text-[rgb(23,23,23)] relative bg-white">
                     
                     {/* Drag Handle */}
                     <motion.div
@@ -225,7 +225,7 @@ const NewFile = () => {
                                     </>
                                 ):(
                                     <div className={`flex flex-col p-2 w-full justify-center items-center border border-dashed border-2 relative cursor-default`}>
-                                        <div className='h-[200px] w-[400px] flex gap-2'> 
+                                        <div className='max-sm:h-[150px] max-sm:w-[300px] h-[200px] w-[400px] flex gap-2'> 
                                             <img src={imagePrev} alt="Preview" className='w-full h-full object-contain'/>
                                         </div>
                                         <div className='flex w-full items-center justify-center'>
@@ -242,7 +242,7 @@ const NewFile = () => {
                                         <input type="checkbox" name="bnw" id="bnw" />
                                         <label htmlFor="bnw">Black & White...</label>
                                     </div>
-                                    <div className='flex gap-3'>
+                                    <div className='flex gap-3 items-center'>
                                         <label htmlFor="portrait">
                                             <input type="radio" name="orientation" id="portrait" value={"portrait"} defaultChecked/>
                                             Portrait
