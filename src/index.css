@@ -27,8 +27,11 @@
   --regOnegridA4: 51.6px;
   --regTwogridA4: 103.2px;
   --regThreegridA4: 154.8px;
-  --regFourgridA4: 206.4px
-
+  --regFourgridA4: 206.4px;
+  --phnOnegridA4: 46px;
+  --phnTwogridA4: 92px;
+  --phnThreegridA4: 138px;
+  --phnFourgridA4: 184px;
 }
 
 /* Scrollbar */
@@ -77,7 +80,7 @@ body{
 /* ------------------------------------------------- */
 /* A4 */
 .frameSizeA4{
-  @apply max-sm:w-[380px] max-sm:h-[537px] h-[603.71px] w-[426.73px]
+  @apply max-sm:w-[381px] max-sm:h-[538.2px] h-[603.71px] w-[426.73px]
 };
 
 /* ------------------------------------------------- */
@@ -213,32 +216,6 @@ body{
   grid-template-rows: repeat(2, var(--regFourgrid6x8))
 }
 
-@media (max-width: 412px) {
-    .gridoneInchGrid6x8{
-      display: grid;
-      grid-template-columns: repeat(6, var(--phnOnegrid6x8));
-      grid-template-rows: repeat(8, var(--phnOnegrid6x8));
-    }
-
-    .gridtwoInchGrid6x8{
-      display: grid;
-      grid-template-columns: repeat(3, var(--phnTwogrid6x8));
-      grid-template-rows: repeat(4, var(--phnTwogrid6x8));
-    }
-
-    .gridthreeInchGrid6x8{
-      display: grid;
-      grid-template-columns: repeat(2, var(--phnThreegrid6x8)) ;
-      grid-template-rows: var(--phnThreegrid6x8) var(--phnThreegrid6x8) 128px;
-    }
-
-    .gridfourInchGrid6x8{
-      display: grid;
-      grid-template-columns: var(--phnFourgrid6x8) var(--phnTwogrid6x8);
-      grid-template-rows: repeat(2, var(--phnFourgrid6x8))
-    }
-}
-
 /* A4 */
 
 .gridoneInchGridA4{
@@ -263,4 +240,55 @@ body{
   display: grid;
   grid-template-columns: repeat(2, var(--regFourgridA4)) 13.93px;
   grid-template-rows: repeat(3, var(--regFourgridA4));
+}
+
+@media (max-width: 412px) {
+    .gridoneInchGrid6x8{
+      display: grid;
+      grid-template-columns: repeat(6, var(--phnOnegrid6x8));
+      grid-template-rows: repeat(8, var(--phnOnegrid6x8));
+    }
+
+    .gridtwoInchGrid6x8{
+      display: grid;
+      grid-template-columns: repeat(3, var(--phnTwogrid6x8));
+      grid-template-rows: repeat(4, var(--phnTwogrid6x8));
+    }
+
+    .gridthreeInchGrid6x8{
+      display: grid;
+      grid-template-columns: repeat(2, var(--phnThreegrid6x8)) ;
+      grid-template-rows: var(--phnThreegrid6x8) var(--phnThreegrid6x8) 128px;
+    }
+
+    .gridfourInchGrid6x8{
+      display: grid;
+      grid-template-columns: var(--phnFourgrid6x8) var(--phnTwogrid6x8);
+      grid-template-rows: repeat(2, var(--phnFourgrid6x8))
+    }
+
+    /* 6x8 */
+    .gridoneInchGridA4{
+      display: grid;
+      grid-template-columns: repeat(8, var(--phnOnegridA4)) 13px;
+      grid-template-rows: repeat(11, var(--phnOnegridA4)) 32.2px;
+    }
+
+    .gridtwoInchGridA4{
+      display: grid;
+      grid-template-columns: repeat(4, var(--phnTwogridA4)) 93px;
+      grid-template-rows: repeat(6, var(--phnTwogridA4));
+    }
+
+    .gridthreeInchGridA4{
+      display: grid;
+      grid-template-columns: repeat(3, var(--phnThreegridA4));
+      grid-template-rows: repeat(4, var(--phnThreegridA4));
+    }
+
+    .gridfourInchGridA4{
+      display: grid;
+      grid-template-columns: repeat(2, var(--phnFourgridA4)) 13px;
+      grid-template-rows: repeat(3, var(--phnFourgridA4));
+    }
 }
