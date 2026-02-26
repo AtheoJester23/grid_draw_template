@@ -10,8 +10,6 @@ const CurrentTab = () => {
     const containerRef = useRef<HTMLDivElement>(null)
     const [touched, setTouched] = useState<boolean>(false)
 
-    const width = useMotionValue(200);
-    const height = useMotionValue(200);
     const dispatch = useDispatch<AppDispatch>()
     
     const {tabNum} = useParams();
@@ -20,6 +18,8 @@ const CurrentTab = () => {
     const filesList = useSelector((state: RootState) => state.fileHolder.files);
     
     const currentFile = tabNum ? filesList[Number(tabNum)] : undefined;
+    const width = useMotionValue(currentFile?.picState.width);
+    const height = useMotionValue(currentFile?.picState.height);
     const x = useMotionValue(currentFile?.picState.x);
     const y = useMotionValue(currentFile?.picState.y);
 
@@ -46,17 +46,29 @@ const CurrentTab = () => {
 
     if(!currentFile) return null;
 
-    const handleUpdatePic = (newX: number, newY: number) => {
+    
+    useEffect(() => {
+        x.set(currentFile.picState.x);
+        y.set(currentFile.picState.y);
+    }, [currentFile.picState.x, currentFile.picState.y])
+    
+    useEffect(() => {
+        width.set(currentFile.picState.width);
+        height.set(currentFile.picState.height);
+    }, [currentFile.picState.width, currentFile.picState.height])
+    
+    const handleUpdatePicPos = (newX: number, newY: number, newWidth: number, newHeigth: number) => {
         const updatedPic = filesList.map((item) => item.id === currentFile.id ? ({...item, picState: {...item.picState, x: newX, y: newY}}): ({...item}))
         
         dispatch(setFiles(updatedPic))
     }
 
-    useEffect(() => {
-        x.set(currentFile.picState.x);
-        y.set(currentFile.picState.y);
-    }, [currentFile.picState.x, currentFile.picState.y])
-  return (
+    const handleUpdatePicSize = (newWidth: number, newHeigth: number, newX?: number, newY?: number) => {
+        const updatedPic = filesList.map((item) => item.id == currentFile.id ? ({...item, picState: {width: newWidth, height: newHeigth, y: newY ?? item.picState.y, x: newX ?? item.picState.x}}) : ({...item}))
+        
+        dispatch(setFiles(updatedPic));
+    }
+    return (
     <>
         <motion.div 
             ref={ref}
@@ -413,8 +425,12 @@ const CurrentTab = () => {
                     onDragEnd={() => {
                         const newX = x.get();
                         const newY = y.get();
+                        const newWidth = width.get();
+                        const newHeight = width.get();
 
-                        handleUpdatePic(newX, newY)
+                        console.log(`width: ${typeof width.get()}`)
+
+                        handleUpdatePicPos(newX, newY, newWidth, newHeight)
                     }}
                 >
 
@@ -440,6 +456,12 @@ const CurrentTab = () => {
                             width.set(newWidth);
                             height.set(newWidth / aspectRatio)
                         }}
+                        onDragEnd={() => {
+                            const newWidth = width.get();
+                            const newHeight = height.get();
+
+                            handleUpdatePicSize(newWidth, newHeight);
+                        }}
                         className={`w-4 h-4 absolute bottom-[0] right-[0] cursor-se-resize`}
                     />
 
@@ -458,6 +480,13 @@ const CurrentTab = () => {
                             
                             width.set(newWidth);
                             height.set(newWidth / aspectRatio)
+                        }}
+                        onDragEnd={() => {
+                            const newX = x.get();
+                            const newWidth = width.get();
+                            const newHeight = height.get();
+
+                            handleUpdatePicSize(newWidth, newHeight, newX);
                         }}
                         className={`w-4 h-4 absolute bottom-[0] left-[0] cursor-sw-resize`}
                     />
@@ -480,6 +509,14 @@ const CurrentTab = () => {
                             width.set(newWidth);
                             height.set(newWidth / aspectRatio)
                         }}
+                        onDragEnd={() => {
+                            const newX = x.get();
+                            const newY = y.get();
+                            const newWidth = width.get();
+                            const newHeight = height.get();
+
+                            handleUpdatePicSize(newWidth, newHeight, newX, newY);
+                        }}
                         className={`w-4 h-4 absolute top-[0] left-[0] cursor-nw-resize`}
                     />
                     
@@ -499,6 +536,13 @@ const CurrentTab = () => {
 
                             width.set(newWidth);
                             height.set(newWidth / aspectRatio)
+                        }}
+                        onDragEnd={() => {
+                            const newY = y.get();
+                            const newWidth = width.get();
+                            const newHeight = height.get();
+
+                            handleUpdatePicSize(newWidth, newHeight, undefined, newY);
                         }}
                         className={`w-4 h-4 absolute top-[0] right-[0] cursor-ne-resize`}
                     />
