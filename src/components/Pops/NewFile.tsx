@@ -87,14 +87,17 @@ const NewFile = () => {
         // toast.success("New file created!", {
         //     autoClose: 1000,
         // })
-        dispatch(setNewFile(false))
-
+        
         console.log(fileholder);
-
+        
         setImagePrev(null);
         setImageName(null);
-        fileInputRef.current!.value = "";
-
+        
+        if(fileInputRef.current){
+            fileInputRef.current!.value = "";
+        }
+        
+        dispatch(setNewFile(false))
         navigate(`/tab/${id}`)
     }
 

@@ -92,10 +92,13 @@ const BottomNav = () => {
           ))}
         </div>
       )}
-      <div className='text-sm navbarStyle flex justify-between'>
-        <button type="button" onClick={() => handleResetImg()}>
-          <AlignCenterVertical/>
-        </button>
+      <div className={`text-sm navbarStyle flex ${files.length > 0 ? "justify-between" : "justify-end"}`}>
+        {files.length > 0 && (
+          <button type="button" onClick={() => handleResetImg()} className="select-none gradientBtn px-2 hover:cursor-pointer duration-300">
+            <AlignCenterVertical/>
+          </button>
+        )}
+        
         <div className="flex items-center gap-1">
           <button onClick={handleResetFrame} className="select-none gradientBtn px-2 hover:cursor-pointer duration-300" >
             <RotateCcw size={20}/>
