@@ -71,8 +71,8 @@ const NewFile = () => {
             picState: {
                 x: 0,
                 y: 0,
-                width: 300,
-                height: 300 
+                width: size === "A4" ? 381 : 384,
+                height: size === "A4" ? 381 : 384
             },
             bnw: bnw == "on" ? true : false,
             orientation
