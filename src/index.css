@@ -223,28 +223,52 @@ body{
 
 
 /* 6x8 */
-.gridoneInchGrid6x8{
+.gridoneInchGrid6x8portrait{
   display: grid;
   grid-template-columns: repeat(6, var(--regOnegrid6x8));
   grid-template-rows: repeat(8, var(--regOnegrid6x8));
 }
 
-.gridtwoInchGrid6x8{
+.gridoneInchGrid6x8landscape{
+  display: grid;
+  grid-template-columns: repeat(8, var(--regOnegrid6x8));
+  grid-template-rows: repeat(6, var(--regOnegrid6x8));
+}
+
+.gridtwoInchGrid6x8portrait{
   display: grid;
   grid-template-columns: repeat(3, var(--regTwogrid6x8));
   grid-template-rows: repeat(4, var(--regTwogrid6x8));
 }
 
-.gridthreeInchGrid6x8{
+.gridtwoInchGrid6x8landscape{
+  display: grid;
+  grid-template-columns: repeat(4, var(--regTwogrid6x8));
+  grid-template-rows: repeat(3, var(--regTwogrid6x8));
+}
+
+.gridthreeInchGrid6x8portrait{
   display: grid;
   grid-template-columns: repeat(2, var(--regThreegrid6x8)) ;
   grid-template-rows: var(--regThreegrid6x8) var(--regThreegrid6x8) 150px;
 }
 
-.gridfourInchGrid6x8{
+.gridthreeInchGrid6x8landscape{
+  display: grid;
+  grid-template-rows: repeat(2, var(--regThreegrid6x8)) ;
+  grid-template-columns: var(--regThreegrid6x8) var(--regThreegrid6x8) 150px;
+}
+
+.gridfourInchGrid6x8portrait{
   display: grid;
   grid-template-columns: var(--regFourgrid6x8) var(--regTwogrid6x8);
   grid-template-rows: repeat(2, var(--regFourgrid6x8))
+}
+
+.gridfourInchGrid6x8landscape{
+  display: grid;
+  grid-template-rows: var(--regFourgrid6x8) var(--regTwogrid6x8);
+  grid-template-columns: repeat(2, var(--regFourgrid6x8))
 }
 
 /* A4 */
