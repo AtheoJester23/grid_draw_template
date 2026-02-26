@@ -4,6 +4,7 @@ import { setFiles } from '../state/Files/FileSlice'
 import { useState } from 'react'
 import { FileCog } from 'lucide-react'
 import { Dialog, DialogPanel } from '@headlessui/react'
+import { useParams } from 'react-router-dom'
 
 const ItemSettings = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -11,6 +12,7 @@ const ItemSettings = () => {
 
     const fileList = useSelector((state: RootState) => state.fileHolder.files);
     const currentTab = useSelector((state: RootState) => state.fileHolder.currentTab);
+    const { id } = useParams();
 
     const currentFile = currentTab != null ? fileList[currentTab] : undefined;
 
@@ -30,31 +32,31 @@ const ItemSettings = () => {
                     })} 
                     className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'
                 >
-                        <option value="noGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>None</option>
-                        <option value="oneInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>1x1 inch boxes</option>
-                        <option value="twoInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>2x2 inch boxes</option>
-                        <option value="threeInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>3x3 inch boxes</option>
-                        <option value="fourInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>4x4 inch boxes</option>
-                    </select>
-                </div>
+                    <option value="noGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>None</option>
+                    <option value="oneInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>1x1 inch boxes</option>
+                    <option value="twoInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>2x2 inch boxes</option>
+                    <option value="threeInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>3x3 inch boxes</option>
+                    <option value="fourInchGrid" className='text-[rgb(23,23,23)] bg-[rgb(234,231,230)]'>4x4 inch boxes</option>
+                </select>
+            </div>
 
-                <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
+            <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
 
-                <div className='flex items-center gap-1'>
-                    <label htmlFor="borderChkbx">Border: </label>
-                    <select 
-                        value={currentFile?.border}
-                        onChange={(e) => dispatch((dispatch, _) => {
-                            const updateExactfile = fileList.map((item, index) => index == currentTab ? ({...item, border: e.currentTarget.value})  : ({...item})) 
-                            dispatch(setFiles(updateExactfile));
-                        })} 
-                        className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'
-                    >
-                        <option value="noBorder">None</option>
-                        <option value="halfCm">0.5 cm</option>
-                        <option value="oneCm">1 cm</option>
-                        <option value="halfInch">0.5 inch</option>
-                        <option value="oneInch">1 inch</option>
+            <div className='flex items-center gap-1'>
+                <label htmlFor="borderChkbx">Border: </label>
+                <select 
+                    value={currentFile?.border}
+                    onChange={(e) => dispatch((dispatch, _) => {
+                        const updateExactfile = fileList.map((item, index) => index == currentTab ? ({...item, border: e.currentTarget.value})  : ({...item})) 
+                        dispatch(setFiles(updateExactfile));
+                    })} 
+                    className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'
+                >
+                    <option value="noBorder">None</option>
+                    <option value="halfCm">0.5 cm</option>
+                    <option value="oneCm">1 cm</option>
+                    <option value="halfInch">0.5 inch</option>
+                    <option value="oneInch">1 inch</option>
                 </select>
             </div>
 
@@ -71,9 +73,20 @@ const ItemSettings = () => {
 
             <div className='w-[1.5px] h-full bg-[rgb(50,50,50)] rounded'/>
 
-            <div className='flex gap-2'>
-                <h1>Frame Size: </h1>
-                <p>{currentFile?.size}</p>
+            <div className='flex items-center gap-1'>
+                <label htmlFor="borderChkbx">Size: </label>
+                <select 
+                    value={currentFile?.size}
+                    onChange={(e) => dispatch((dispatch, _) => {
+                        const updateExactfile = fileList.map((item, index) => index == currentTab ? ({...item, size: e.currentTarget.value})  : ({...item})) 
+                        dispatch(setFiles(updateExactfile));
+                    })} 
+                    className='border border-[rgb(23,23,23)] max-sm:px-1 px-3 bg-[rgb(23,23,23)] rounded'
+                >
+                    <option value="A4">A4</option>
+                    <option value="6x8">6x8</option>
+                    <option value="4x6">4x6</option>
+                </select>
             </div>
         </div>
 

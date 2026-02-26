@@ -36,31 +36,35 @@ const CurrentTab = () => {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [touched]);
-
-    if(!currentFile) return null;
-
     
     useEffect(() => {
+        if(!currentFile) return;
         x.set(currentFile.picState.x);
         y.set(currentFile.picState.y);
-    }, [currentFile.picState.x, currentFile.picState.y])
+    }, [currentFile?.picState.x, currentFile?.picState.y])
     
     useEffect(() => {
+        if(!currentFile) return;
         width.set(currentFile.picState.width);
         height.set(currentFile.picState.height);
-    }, [currentFile.picState.width, currentFile.picState.height])
+    }, [currentFile?.picState.width, currentFile?.picState.height])
     
     const handleUpdatePicPos = (newX: number, newY: number, newWidth: number, newHeigth: number) => {
+        if(!currentFile) return;
         const updatedPic = filesList.map((item) => item.id === currentFile.id ? ({...item, picState: {...item.picState, x: newX, y: newY}}): ({...item}))
         
         dispatch(setFiles(updatedPic))
     }
 
     const handleUpdatePicSize = (newWidth: number, newHeigth: number, newX?: number, newY?: number) => {
+        if(!currentFile) return;
         const updatedPic = filesList.map((item) => item.id == currentFile.id ? ({...item, picState: {width: newWidth, height: newHeigth, y: newY ?? item.picState.y, x: newX ?? item.picState.x}}) : ({...item}))
         
         dispatch(setFiles(updatedPic));
     }
+
+    if(!currentFile) return null;
+
     return (
     <>
         <motion.div 

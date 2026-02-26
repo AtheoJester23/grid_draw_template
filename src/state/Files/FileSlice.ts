@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 type filesType = {
     id: string,
     name: null | string,
-    size: null | string,
+    size: string,
     border: "noBorder" | "halfCm" | "oneCm" | "halfInch" | "oneInch",
     grid: "noGrid" | 'oneInchGrid' | 'twoInchGrid' | 'threeInchGrid' | 'fourInchGrid',
     bnw: boolean,
