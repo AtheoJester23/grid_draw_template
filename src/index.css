@@ -322,52 +322,100 @@ body{
 }
 
 @media (max-width: 412px) {
-    .gridoneInchGrid6x8{
+    .gridoneInchGrid6x8portrait{
       display: grid;
       grid-template-columns: repeat(6, var(--phnOnegrid6x8));
       grid-template-rows: repeat(8, var(--phnOnegrid6x8));
     }
 
-    .gridtwoInchGrid6x8{
+    .gridoneInchGrid6x8landscape{
+      display: grid;
+      grid-template-columns: repeat(8, var(--phnOnegrid6x8));
+      grid-template-rows: repeat(6, var(--phnOnegrid6x8));
+    }
+
+    .gridtwoInchGrid6x8portrait{
       display: grid;
       grid-template-columns: repeat(3, var(--phnTwogrid6x8));
       grid-template-rows: repeat(4, var(--phnTwogrid6x8));
     }
 
-    .gridthreeInchGrid6x8{
+    .gridtwoInchGrid6x8landscape{
+      display: grid;
+      grid-template-columns: repeat(4, var(--phnTwogrid6x8));
+      grid-template-rows: repeat(3, var(--phnTwogrid6x8));
+    }
+
+    .gridthreeInchGrid6x8portrait{
       display: grid;
       grid-template-columns: repeat(2, var(--phnThreegrid6x8)) ;
       grid-template-rows: var(--phnThreegrid6x8) var(--phnThreegrid6x8) 128px;
     }
 
-    .gridfourInchGrid6x8{
+    .gridthreeInchGrid6x8landscape{
+      display: grid;
+      grid-template-rows: repeat(2, var(--phnThreegrid6x8)) ;
+      grid-template-columns: var(--phnThreegrid6x8) var(--phnThreegrid6x8) 128px;
+    }
+
+    .gridfourInchGrid6x8portrait{
       display: grid;
       grid-template-columns: var(--phnFourgrid6x8) var(--phnTwogrid6x8);
       grid-template-rows: repeat(2, var(--phnFourgrid6x8))
     }
 
-    /* 6x8 */
-    .gridoneInchGridA4{
+    .gridfourInchGrid6x8landscape{
+      display: grid;
+      grid-template-rows: var(--phnFourgrid6x8) var(--phnTwogrid6x8);
+      grid-template-columns: repeat(2, var(--phnFourgrid6x8))
+    }
+
+    /* A4 */
+    .gridoneInchGridA4portrait{
       display: grid;
       grid-template-columns: repeat(8, var(--phnOnegridA4)) 13px;
       grid-template-rows: repeat(11, var(--phnOnegridA4)) 32.2px;
     }
 
-    .gridtwoInchGridA4{
+    .gridoneInchGridA4landscape{
+      display: grid;
+      grid-template-rows: repeat(8, var(--phnOnegridA4)) 13px;
+      grid-template-columns: repeat(11, var(--phnOnegridA4)) 32.2px;
+    }
+
+    .gridtwoInchGridA4portrait{
       display: grid;
       grid-template-columns: repeat(4, var(--phnTwogridA4)) 93px;
       grid-template-rows: repeat(6, var(--phnTwogridA4));
     }
 
-    .gridthreeInchGridA4{
+    .gridtwoInchGridA4landscape{
+      display: grid;
+      grid-template-rows: repeat(4, var(--phnTwogridA4)) 93px;
+      grid-template-columns: repeat(6, var(--phnTwogridA4));
+    }
+
+    .gridthreeInchGridA4portrait{
       display: grid;
       grid-template-columns: repeat(3, var(--phnThreegridA4));
       grid-template-rows: repeat(4, var(--phnThreegridA4));
     }
 
-    .gridfourInchGridA4{
+    .gridthreeInchGridA4landscape{
+      display: grid;
+      grid-template-rows: repeat(3, var(--phnThreegridA4));
+      grid-template-columns: repeat(4, var(--phnThreegridA4));
+    }
+
+    .gridfourInchGridA4portrait{
       display: grid;
       grid-template-columns: repeat(2, var(--phnFourgridA4)) 13px;
       grid-template-rows: repeat(3, var(--phnFourgridA4));
+    }
+
+    .gridfourInchGridA4landscape{
+      display: grid;
+      grid-template-rows: repeat(2, var(--phnFourgridA4)) 13px;
+      grid-template-columns: repeat(3, var(--phnFourgridA4));
     }
 }
