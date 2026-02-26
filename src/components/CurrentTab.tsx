@@ -358,12 +358,12 @@ const CurrentTab = () => {
                             <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
                                 <div className="border-e"/>
                                 <div className="border-e"/>
-                                <div className="border-e"/>
+                                <div className=""/>
                                 <div className="border-t border-e"/>
                                 <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>                              <div className="border-t border-e"/>
+                                <div className="border-t "/>                              <div className="border-t border-e"/>
                                 <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
+                                <div className="border-t"/>
                                 <div className="border-t border-e"/>
                                 <div className="border-t border-e"/>
                                 <div className="border-t"/>                      

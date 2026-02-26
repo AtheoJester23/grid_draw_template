@@ -232,14 +232,14 @@ body{
 
 .gridthreeInchGridA4{
   display: grid;
-  grid-template-columns: repeat(3, var(--regThreegridA4));
-  grid-template-rows: repeat(4, var(--regThreegridA4));
+  grid-template-columns: repeat(2, var(--regThreegridA4)) 1fr;
+  grid-template-rows: repeat(3, var(--regThreegridA4)) 1fr;
 }
 
 .gridfourInchGridA4{
   display: grid;
   grid-template-columns: repeat(2, var(--regFourgridA4)) 13.93px;
-  grid-template-rows: repeat(3, var(--regFourgridA4));
+  grid-template-rows: repeat(2, var(--regFourgridA4)) 1fr;
 }
 
 @media (max-width: 412px) {
