@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentTab, setFiles, setNewFile } from '../../state/Files/FileSlice'
 import React, { useRef, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { nanoid } from 'nanoid'
 
 type possibleErrs = {
     name: boolean,
@@ -58,12 +59,21 @@ const NewFile = () => {
             return;
         }
 
+        const id = nanoid();
+
         const saveFile = {
+            id,
             name,
             size,
             border,
             grid,
             pic: imagePrev,
+            picState: {
+                x: 0,
+                y: 0,
+                width: "200",
+                height: "200" 
+            },
             bnw: bnw == "on" ? true : false,
             orientation
         }

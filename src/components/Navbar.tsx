@@ -6,7 +6,7 @@ import type { AppDispatch, RootState } from '../state/store';
 import { setDownload, setNewFile } from '../state/Files/FileSlice';
 import { ToastContainer } from 'react-toastify';
 import ItemSettings from './ItemSettings';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 
 const Navbar = () => {
@@ -27,7 +27,6 @@ const Navbar = () => {
 
     const currentTab = useLocation()
 
-    const {tabNum} = useParams();
   return (
     <div className='relative z-20'>
         <motion.div 

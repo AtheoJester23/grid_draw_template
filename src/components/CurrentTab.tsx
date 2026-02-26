@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom"
-import type { RootState } from "../state/store";
+import type { AppDispatch, RootState } from "../state/store";
 import { motion, useMotionValue } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
 import Download from "./Pops/Download";
-import { current } from "@reduxjs/toolkit";
+import { setFiles } from "../state/Files/FileSlice";
 
 const CurrentTab = () => {
     const containerRef = useRef<HTMLDivElement>(null)
@@ -12,15 +12,16 @@ const CurrentTab = () => {
 
     const width = useMotionValue(200);
     const height = useMotionValue(200);
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
+    const dispatch = useDispatch<AppDispatch>()
+    
     const {tabNum} = useParams();
     const navigate = useNavigate()
 
     const filesList = useSelector((state: RootState) => state.fileHolder.files);
-
+    
     const currentFile = tabNum ? filesList[Number(tabNum)] : undefined;
+    const x = useMotionValue(currentFile?.picState.x);
+    const y = useMotionValue(currentFile?.picState.y);
 
     const ref = useRef(null)
 
@@ -39,18 +40,22 @@ const CurrentTab = () => {
 
     useEffect(() => {
         if(!currentFile){
-            navigate("/")
+            navigate("/testing")
         }
     }, [currentFile, navigate]);
 
     if(!currentFile) return null;
 
-    const selectedTab = useSelector((state: RootState) => state.fileHolder.currentTab);
+    const handleUpdatePic = (newX: number, newY: number) => {
+        const updatedPic = filesList.map((item) => item.id === currentFile.id ? ({...item, picState: {...item.picState, x: newX, y: newY}}): ({...item}))
+        
+        dispatch(setFiles(updatedPic))
+    }
 
-    console.log("===============================================")
-    console.log("This is the current Tab:")
-    console.log(selectedTab);
-
+    useEffect(() => {
+        x.set(currentFile.picState.x);
+        y.set(currentFile.picState.y);
+    }, [currentFile.picState.x, currentFile.picState.y])
   return (
     <>
         <motion.div 
@@ -58,335 +63,337 @@ const CurrentTab = () => {
             className={`frameSize${currentFile.size} ${currentFile.bnw == true && 'grayscale'} bg-white flex justify-center items-center ${currentFile.border + currentFile.size} cursor-default`}
         >
             <div className={`relative ${touched ? "" : "overflow-hidden"} content grid h-full w-full flex ${currentFile.border !== "noBorder" && "border-[1.5px]"}`}>
-                {currentFile.size == "4x6" && (
-                    <>
-                        {currentFile.grid == "oneInchGrid" ? (
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className=""/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                            </div>
-                        ): currentFile.grid == "twoInchGrid" ? (
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-e"/>
-                                <div className=""/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                            </div>
-                        ): currentFile.grid == "threeInchGrid" ? (
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-e"/>
-                                <div className=""/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                            </div>
-                        ): currentFile.grid == "fourInchGrid" ? (
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-b"/>
-                            </div>
-                        ):(
-                            null
-                        )}
-                    </>
-                )}
+                <>
+                    {currentFile.size == "4x6" && (
+                        <>
+                            {currentFile.grid == "oneInchGrid" ? (
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className=""/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                </div>
+                            ): currentFile.grid == "twoInchGrid" ? (
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-e"/>
+                                    <div className=""/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                </div>
+                            ): currentFile.grid == "threeInchGrid" ? (
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-e"/>
+                                    <div className=""/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                </div>
+                            ): currentFile.grid == "fourInchGrid" ? (
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-b"/>
+                                </div>
+                            ):(
+                                null
+                            )}
+                        </>
+                    )}
 
-                {currentFile.size == "6x8" ? (
-                    <>
-                        {currentFile.grid == "oneInchGrid" ? (
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div />
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>  
-                            </div>
-                        ): currentFile.grid == "twoInchGrid" ? (
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div/>
-                                <div className="border-t border-e "/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e "/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e "/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                
-                            </div>
-                        ): currentFile.grid == "threeInchGrid" ?(
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className="border-t border-e "/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e "/>
-                                <div className="border-t border-e"/>                                
-                            </div>
-                        ): currentFile.grid == "fourInchGrid" ?(
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className="border-t border-e "/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e "/>
-                                <div className="border-t border-e"/>                                
-                            </div>
-                        ):(
-                            null
-                        )}
-                    </>
-                ):(
-                    null
-                )}
-                
-                {currentFile.size == "A4" ? (
-                    <>
-                        {currentFile.grid == "oneInchGrid" ? (
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className="border-e "/>
-                                <div className="border-e"/>
-                                <div className="border-e "/>
-                                <div className="border-e "/>
-                                <div className="border-e "/>
-                                <div className="border-e "/>
-                                <div/>
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t border-e"/>                                
-                                <div className="border-t"/>                               
-                            </div>
-                        ): currentFile.grid == "twoInchGrid" ? (
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className=""/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                            </div>
-                        ): currentFile.grid == "threeInchGrid" ? (
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className=""/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t "/>                              <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t"/>                      
-                            </div>
-                        ): currentFile.grid == "fourInchGrid" ? (
-                            <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className="border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>                              <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                <div className="border-t border-e"/>
-                                                  
-                            </div>
-                        ):(
-                            null
-                        )}
-                    </>
-                ):(
-                    null
-                )}
+                    {currentFile.size == "6x8" ? (
+                        <>
+                            {currentFile.grid == "oneInchGrid" ? (
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div />
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>  
+                                </div>
+                            ): currentFile.grid == "twoInchGrid" ? (
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div/>
+                                    <div className="border-t border-e "/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e "/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e "/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    
+                                </div>
+                            ): currentFile.grid == "threeInchGrid" ?(
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className="border-t border-e "/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e "/>
+                                    <div className="border-t border-e"/>                                
+                                </div>
+                            ): currentFile.grid == "fourInchGrid" ?(
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className="border-t border-e "/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e "/>
+                                    <div className="border-t border-e"/>                                
+                                </div>
+                            ):(
+                                null
+                            )}
+                        </>
+                    ):(
+                        null
+                    )}
+                    
+                    {currentFile.size == "A4" ? (
+                        <>
+                            {currentFile.grid == "oneInchGrid" ? (
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className="border-e "/>
+                                    <div className="border-e"/>
+                                    <div className="border-e "/>
+                                    <div className="border-e "/>
+                                    <div className="border-e "/>
+                                    <div className="border-e "/>
+                                    <div/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t"/>                               
+                                </div>
+                            ): currentFile.grid == "twoInchGrid" ? (
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className=""/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                </div>
+                            ): currentFile.grid == "threeInchGrid" ? (
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className=""/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t "/>                              <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t"/>                      
+                                </div>
+                            ): currentFile.grid == "fourInchGrid" ? (
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className="border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>                              <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                                    
+                                </div>
+                            ):(
+                                null
+                            )}
+                        </>
+                    ):(
+                        null
+                    )}
+                </>
 
                 {/* Grids here */}
                 <motion.div
@@ -403,6 +410,12 @@ const CurrentTab = () => {
                     }}
                     className={`z-10 overflow-hidden ${touched && "border border-2 border-dashed border-gray-500 cursor-grab active:cursor-grabbing"}`}
                     onMouseDown={() => setTouched(true)}  // click or hold starts here
+                    onDragEnd={() => {
+                        const newX = x.get();
+                        const newY = y.get();
+
+                        handleUpdatePic(newX, newY)
+                    }}
                 >
 
                     {/* Image */}
@@ -420,7 +433,7 @@ const CurrentTab = () => {
                         dragMomentum={false}
                         dragElastic={0}
                         dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
-                        onDrag={(event, info) => {
+                        onDrag={(_, info) => {
                             const delta = info.delta.x
                             const aspectRatio = 1;
                             const newWidth = Math.max(100, width.get() + delta);
@@ -436,7 +449,7 @@ const CurrentTab = () => {
                         dragMomentum={false}
                         dragElastic={0}
                         dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
-                        onDrag={(event, info) => {
+                        onDrag={(_, info) => {
                             const delta = info.delta.x
                             const aspectRatio = 1;
                             const newWidth = Math.max(100, width.get() - delta);
@@ -455,7 +468,7 @@ const CurrentTab = () => {
                         dragMomentum={false}
                         dragElastic={0}
                         dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
-                        onDrag={(event, info) => {
+                        onDrag={(_, info) => {
                             const dx = info.delta.x
                             const dy = info.delta.y;
                             const aspectRatio = 1;
@@ -476,7 +489,7 @@ const CurrentTab = () => {
                         dragMomentum={false}
                         dragElastic={0}
                         dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
-                        onDrag={(event, info) => {
+                        onDrag={(_, info) => {
                             const dx = info.delta.x
                             const dy = info.delta.y;
                             const aspectRatio = 1;

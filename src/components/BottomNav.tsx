@@ -1,4 +1,4 @@
-import { AlignCenterVertical, Minus, Plus, RotateCcw, Undo2, X } from "lucide-react"
+import { AlignCenterVertical, Minus, Plus, RotateCcw, X } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../state/store"
 import { setFrame, setZoom } from "../state/EditConfig/EditSlice"

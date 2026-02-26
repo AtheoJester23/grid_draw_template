@@ -1,12 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type filesType = {
+    id: string,
     name: null | string,
     size: null | string,
     border: "noBorder" | "halfCm" | "oneCm" | "halfInch" | "oneInch",
     grid: "noGrid" | 'oneInchGrid' | 'twoInchGrid' | 'threeInchGrid' | 'fourInchGrid',
     bnw: boolean,
     pic: string,
+    picState: {
+        x: number,
+        y: number,
+        width: string,
+        height: string,
+    }
     orientation: 'portrait' | 'landscape'
 }
 

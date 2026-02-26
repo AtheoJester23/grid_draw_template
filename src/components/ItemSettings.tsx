@@ -1,21 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from '../state/store'
-import { setFiles, setGraycale } from '../state/Files/FileSlice'
-import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { setFiles } from '../state/Files/FileSlice'
+import { useState } from 'react'
 import { FileCog } from 'lucide-react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 
 const ItemSettings = () => {
     const dispatch = useDispatch<AppDispatch>()
     const [openFileSettings, setOpenFileSettings] = useState(false);
-
-    const handleBnW = () => {
-        dispatch((dispatch, getState) => {
-            const currentState = getState().fileHolder.grayscale;
-            dispatch(setGraycale(!currentState))
-        })
-    }
 
     const fileList = useSelector((state: RootState) => state.fileHolder.files);
     const currentTab = useSelector((state: RootState) => state.fileHolder.currentTab);
