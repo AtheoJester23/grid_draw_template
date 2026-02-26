@@ -148,9 +148,20 @@ const ItemSettings = () => {
                         <span className="min-md:hidden">B&W</span>
                     </label>
 
-                    <div className='flex gap-2'>
-                        <h1>Frame Size: </h1>
-                        <p>{currentFile?.size}</p>
+                    <div className='flex items-center gap-1'>
+                        <label htmlFor="borderChkbx">Size: </label>
+                        <select 
+                            value={currentFile?.size}
+                            onChange={(e) => dispatch((dispatch, _) => {
+                                const updateExactfile = fileList.map((item, index) => index == currentTab ? ({...item, size: e.currentTarget.value})  : ({...item})) 
+                                dispatch(setFiles(updateExactfile));
+                            })} 
+                            className='border py-2 px-5 border-[rgb(23,23,23)] max-sm:px-1 px-3 rounded-sm w-full border-gray-500'
+                        >
+                            <option value="A4">A4</option>
+                            <option value="6x8">6x8</option>
+                            <option value="4x6">4x6</option>
+                        </select>
                     </div>
                 </div>
             </DialogPanel>
