@@ -79,21 +79,33 @@ body{
 /* Frame Sizes */
 /* ------------------------------------------------- */
 /* A4 */
-.frameSizeA4{
+.frameSizeA4portrait{
   @apply max-sm:w-[381px] max-sm:h-[538.2px] h-[603.71px] w-[426.73px]
+};
+
+.frameSizeA4landscape{
+  @apply max-sm:h-[381px] max-sm:w-[538.2px] w-[603.71px] h-[426.73px]
 };
 
 /* ------------------------------------------------- */
 /* 6x8: */
-.frameSize6x8{
+.frameSize6x8portrait{
   @apply max-sm:h-[512px] max-sm:w-[384px] h-[600px] w-[450px]
+}
+
+.frameSize6x8landscape{
+  @apply max-sm:w-[512px] max-sm:h-[384px] w-[600px] h-[450px]
 }
 
 
 /* ------------------------------------------------- */
 /* 4x6 */
-.frameSize4x6{
+.frameSize4x6portrait{
   @apply h-[576px] w-[384px];
+}
+
+.frameSize4x6landscape{
+  @apply w-[576px] h-[384px];
 }
 
 
@@ -167,29 +179,48 @@ body{
 /* Grid Sizes */
 /* ------------------------------------------------- */
 /* 4x6 */
-.gridoneInchGrid4x6{
+.gridoneInchGrid4x6portrait{
   display: grid;
   grid-template-columns: repeat(4, var(--oneInch4x6));
   grid-template-rows: repeat(6, var(--oneInch4x6));
 }
 
-.gridtwoInchGrid4x6{
+.gridtwoInchGrid4x6portrait{
   display: grid;
   grid-template-columns: repeat(2, var(--twoInch4x6));
   grid-template-rows: repeat(3, var(--twoInch4x6));
 }
 
-.gridthreeInchGrid4x6{
+.gridthreeInchGrid4x6portrait{
   display: grid;
   grid-template-columns: 288px 96px;
   grid-template-rows: repeat(2, var(--threeInch4x6));
 }
 
-.gridfourInchGrid4x6{
+.gridfourInchGrid4x6portrait .gridfourInchGrid4x6landscape{
   display: grid;
   grid-template-columns: 384px;
   grid-template-rows: 384px;
 }
+
+.gridoneInchGrid4x6landscape{
+  display: grid;
+  grid-template-columns: repeat(6, var(--oneInch4x6));
+  grid-template-rows: repeat(4, var(--oneInch4x6));
+}
+
+.gridtwoInchGrid4x6landscape{
+  display: grid;
+  grid-template-columns: repeat(2, var(--twoInch4x6));
+  grid-template-rows: repeat(3, var(--twoInch4x6));
+}
+
+.gridthreeInchGrid4x6landscape{
+  display: grid;
+  grid-template-columns: repeat(2, var(--threeInch4x6));
+  grid-template-rows: 288px 96px;
+}
+
 
 /* 6x8 */
 .gridoneInchGrid6x8{
