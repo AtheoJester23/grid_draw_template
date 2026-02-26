@@ -226,7 +226,7 @@ const CurrentTab = () => {
                     {currentFile.size == "A4" ? (
                         <>
                             {currentFile.grid == "oneInchGrid" ? (
-                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size}${currentFile.orientation} z-20 pointer-events-none`}>
                                     <div className="border-e"/>
                                     <div className="border-e"/>
                                     <div className="border-e "/>
@@ -235,7 +235,61 @@ const CurrentTab = () => {
                                     <div className="border-e "/>
                                     <div className="border-e "/>
                                     <div className="border-e "/>
-                                    <div/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e" : ""}`}/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e" : "border-t border-e"}`}/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e" : "border-t border-e"}`}/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "" : "border-e border-t"}`}/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-t" : "border-t border-e"}`}/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t "/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-t" : "border-t border-e"}`}/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-t" : "border-t border-e"}`}/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className="border-t border-e"/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
@@ -253,79 +307,25 @@ const CurrentTab = () => {
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
-                                    <div className="border-t"/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-t" : "border-t border-e"}`}/>                                
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
                                     <div className="border-t border-e"/>                                
-                                    <div className="border-t"/>
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-t" : "border-t border-e"}`}/>                                
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t"/>
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t"/>
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t"/>
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t"/>
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t"/>
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t"/>
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t border-e"/>                                
-                                    <div className="border-t"/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
                                     <div className="border-t border-e"/>                                
@@ -337,27 +337,27 @@ const CurrentTab = () => {
                                     <div className="border-t"/>                               
                                 </div>
                             ): currentFile.grid == "twoInchGrid" ? (
-                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size}${currentFile.orientation} z-20 pointer-events-none`}>
                                     <div className="border-e"/>
                                     <div className="border-e"/>
                                     <div className="border-e"/>
                                     <div className="border-e"/>
-                                    <div className=""/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e" : ""}`}/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "" : "border-t border-e"}`}/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className="border-t border-e"/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
                                     <div className="border-t border-e"/>
                                     <div className="border-t border-e"/>
                                     <div className="border-t border-e"/>
                                     <div className="border-t border-e"/>
-                                    <div className="border-t"/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
                                     <div className="border-t border-e"/>
                                     <div className="border-t border-e"/>
                                     <div className="border-t border-e"/>
                                     <div className="border-t border-e"/>
-                                    <div className="border-t"/>
-                                    <div className="border-t border-e"/>
-                                    <div className="border-t border-e"/>
-                                    <div className="border-t border-e"/>
-                                    <div className="border-t border-e"/>
-                                    <div className="border-t"/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
                                     <div className="border-t border-e"/>
                                     <div className="border-t border-e"/>
                                     <div className="border-t border-e"/>
@@ -370,21 +370,22 @@ const CurrentTab = () => {
                                     <div className="border-t"/>
                                 </div>
                             ): currentFile.grid == "threeInchGrid" ? (
-                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size}${currentFile.orientation} z-20 pointer-events-none`}>
                                     <div className="border-e"/>
                                     <div className="border-e"/>
-                                    <div className=""/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e" : ""}`}/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "" : "border-t border-e"}`}/>
                                     <div className="border-t border-e"/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
                                     <div className="border-t border-e"/>
-                                    <div className="border-t "/>                              <div className="border-t border-e"/>
-                                    <div className="border-t border-e"/>
-                                    <div className="border-t"/>
+                                    <div className={`${currentFile.orientation == "landscape" ? " border-t" : "border-e border-t"}`}/>
+                                    <div className={`${currentFile.orientation == "landscape" ? "border-e border-t" : "border-t"}`}/>
                                     <div className="border-t border-e"/>
                                     <div className="border-t border-e"/>
                                     <div className="border-t"/>                      
                                 </div>
                             ): currentFile.grid == "fourInchGrid" ? (
-                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size} z-20 pointer-events-none`}>
+                                <div className={`absolute top-0 left-0 right-0 bottom-0 grid${currentFile.grid}${currentFile.size}${currentFile.orientation} z-20 pointer-events-none`}>
                                     <div className="border-e"/>
                                     <div className="border-e"/>
                                     <div className="border-e"/>
