@@ -95,7 +95,7 @@ const NewFile = () => {
         setImageName(null);
         fileInputRef.current!.value = "";
 
-        navigate(`/tab/${fileholder.length}`)
+        navigate(`/tab/${id}`)
     }
 
     const handlePickPic = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -11,7 +11,7 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path="" element={<Home/>}>
-            <Route path='/tab/:tabNum' element={<CurrentTab/>}/>
+            <Route path='/tab/:id' element={<CurrentTab/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

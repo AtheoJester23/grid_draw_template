@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../state/store"
 import { setFrame, setZoom } from "../state/EditConfig/EditSlice"
 import { useRef } from "react"
-import { setCurrentTab, setDelete, setDeleteTarget } from "../state/Files/FileSlice"
-import { NavLink } from "react-router-dom"
+import { setCurrentTab, setDelete, setDeleteTarget, setFiles } from "../state/Files/FileSlice"
+import { NavLink, useParams } from "react-router-dom"
 
 const BottomNav = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -58,13 +58,29 @@ const BottomNav = () => {
     dispatch(setCurrentTab(target))
   }
 
+  const { id } = useParams();
+  
+  const handleResetImg = () => {
+    dispatch((dispatch, getState) => {
+      const filesList = getState().fileHolder.files;
+
+      const updatedFile = filesList.map(item =>
+        item.id == id
+          ? { ...item, picState: { ...item.picState, x: 0, y: 0 } }
+          : item
+      );
+
+      dispatch(setFiles(updatedFile));
+    });
+  };
+
   return (
     <div className="z-50 absolute bottom-0 left-0 right-0 flex flex-col gap-[1.6px] bg-[rgb(23,23,23)]">
       {files.length > 0 && (
         <div className="px-2 flex gap-0.5 tabsContainer overflow-x-auto">
           {files.map((item, index) => (
             <div onClick={() => handleSelectedTab(index)} key={index} className="relative">
-              <NavLink to={`tab/${index}`} className="tabsStyle inline-flex p-1 px-2 w-45 text-white rounded-t">
+              <NavLink to={`tab/${item.id}`} className="tabsStyle inline-flex p-1 px-2 w-45 text-white rounded-t">
                 <div className="w-full flex items-center justify-between">
                   <p className="truncate w-[80%]">{item.name}</p>
                 </div>
@@ -77,9 +93,9 @@ const BottomNav = () => {
         </div>
       )}
       <div className='text-sm navbarStyle flex justify-between'>
-        <div>
+        <button type="button" onClick={() => handleResetImg()}>
           <AlignCenterVertical/>
-        </div>
+        </button>
         <div className="flex items-center gap-1">
           <button onClick={handleResetFrame} className="select-none gradientBtn px-2 hover:cursor-pointer duration-300" >
             <RotateCcw size={20}/>

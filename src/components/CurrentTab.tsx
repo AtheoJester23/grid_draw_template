@@ -12,12 +12,11 @@ const CurrentTab = () => {
 
     const dispatch = useDispatch<AppDispatch>()
     
-    const {tabNum} = useParams();
-    const navigate = useNavigate()
+    const { id } = useParams();
 
     const filesList = useSelector((state: RootState) => state.fileHolder.files);
     
-    const currentFile = tabNum ? filesList[Number(tabNum)] : undefined;
+    const currentFile = filesList.find(item => item.id == id);
     const width = useMotionValue(currentFile?.picState.width);
     const height = useMotionValue(currentFile?.picState.height);
     const x = useMotionValue(currentFile?.picState.x);
@@ -37,12 +36,6 @@ const CurrentTab = () => {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [touched]);
-
-    useEffect(() => {
-        if(!currentFile){
-            navigate("/testing")
-        }
-    }, [currentFile, navigate]);
 
     if(!currentFile) return null;
 
