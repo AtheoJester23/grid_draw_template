@@ -1,5 +1,11 @@
 {
   "name": "griddrawtemplate",
+  "author": "Atheo Jester S. Baltazar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AtheoJester23/grid_draw_template"
+  },
+  "license": "UNLICENSED",
   "private": true,
   "version": "0.0.0",
   "type": "module",
