@@ -36,7 +36,7 @@ const BottomNav = () => {
     intervalRef.current = window.setInterval(() => {
       dispatch((dispatch, getState) => {
         let currentZoom = getState().editFile.zoom;
-        if(currentZoom - 0.1 < 1) return;
+        if(currentZoom - 0.1 < 0.5) return;
         dispatch(setZoom(currentZoom - 0.1))
       })
     }, 50)
