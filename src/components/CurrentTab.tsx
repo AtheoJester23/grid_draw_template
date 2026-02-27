@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import type { AppDispatch, RootState } from "../state/store";
 import { motion, useMotionValue } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
@@ -31,7 +31,6 @@ const CurrentTab = () => {
     }, [currentFile])
 
     const ref = useRef(null)
-    const startAngleRef = useRef(0);
 
     const getAngle = (clientX: number, clientY: number) => {
         const { x: centerX, y: centerY } = centerRef.current;
@@ -116,7 +115,7 @@ const CurrentTab = () => {
         height.set(currentFile.picState.height);
     }, [currentFile?.picState.width, currentFile?.picState.height])
     
-    const handleUpdatePicPos = (newX: number, newY: number, newWidth: number, newHeigth: number) => {
+    const handleUpdatePicPos = (newX: number, newY: number) => {
         if(!currentFile) return;
         const updatedPic = filesList.map((item) => item.id === currentFile.id ? ({...item, picState: {...item.picState, x: newX, y: newY}}): ({...item}))
         
@@ -492,12 +491,9 @@ const CurrentTab = () => {
                         onDragEnd={() => {
                             const newX = x.get();
                             const newY = y.get();
-                            const newWidth = width.get();
-                            const newHeight = height.get();
-
                             console.log(`width: ${typeof width.get()}`)
 
-                            handleUpdatePicPos(newX, newY, newWidth, newHeight)
+                            handleUpdatePicPos(newX, newY)
                         }}
                         animate={{ x: currentFile.picState.x, y: currentFile.picState.y }}
                         transition={{ type: "spring", stiffness: 200, damping: 20 }}
@@ -643,7 +639,7 @@ const CurrentTab = () => {
                             onDragEnd={() => {
                                 handleUpdateRotate()
                             }}
-                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute top-[-30px] right-[-30px] cursor-grab active:cursor-grabbing duration-300"
+                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute top-[-30px] right-[-30px] cursor-none active:cursor-grabbing duration-300"
                         >
                             <CornerUpLeft color="gray"/>
                         </motion.div>
@@ -656,7 +652,10 @@ const CurrentTab = () => {
                                 e.stopPropagation(); 
                                 handleMouseDown(e)
                             }}
-                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute top-[-30px] left-[-30px] cursor-grab active:cursor-grabbing duration-300"
+                            onDragEnd={() => {
+                                handleUpdateRotate()
+                            }}
+                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute top-[-30px] left-[-30px] cursor-none active:cursor-grabbing duration-300"
                         >
                             <CornerLeftDown color="gray"/>
                         </motion.div>
@@ -669,7 +668,10 @@ const CurrentTab = () => {
                                 e.stopPropagation(); 
                                 handleMouseDown(e)
                             }}
-                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute bottom-[-30px] left-[-30px] cursor-grab active:cursor-grabbing duration-300"
+                            onDragEnd={() => {
+                                handleUpdateRotate()
+                            }}
+                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute bottom-[-30px] left-[-30px] cursor-none active:cursor-grabbing duration-300"
                         >
                             <CornerDownRight color="gray"/>
                         </motion.div>

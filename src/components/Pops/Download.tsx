@@ -6,7 +6,6 @@ import type { AppDispatch, RootState } from '../../state/store'
 import { setDownload } from '../../state/Files/FileSlice'
 import { useState, type FormEvent, type RefObject } from 'react'
 import { toJpeg, toPng } from 'html-to-image'
-import { useParams } from 'react-router-dom'
 
 type possibleErrors = {
     name: boolean,

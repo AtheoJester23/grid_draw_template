@@ -1,7 +1,7 @@
 import { Dialog, DialogPanel } from "@headlessui/react"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../../state/store"
-import { setCurrentTab, setDelete, setDeleteTarget, setFiles } from "../../state/Files/FileSlice";
+import { setDelete, setDeleteTarget, setFiles } from "../../state/Files/FileSlice";
 import { motion } from 'framer-motion'
 import { TriangleAlert, X } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -22,9 +22,6 @@ const DeleteWarning = () => {
         dispatch((dispatch, getState) => {
             const currentFiles = getState().fileHolder.files;
             const DeleteTargetId = getState().fileHolder.targetDelete
-            const indexOfTarget = currentFiles.findIndex(item => item.id == id);
-
-            const currentTab = getState().fileHolder.currentTab
 
             const filtered = currentFiles.filter((item) => item.id !== DeleteTargetId)
             

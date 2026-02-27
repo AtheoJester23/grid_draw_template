@@ -57,6 +57,7 @@ const BottomNav = () => {
   const handleSelectedTab = (target: number, id: string) => {
     dispatch(setCurrentTab(target))
     dispatch(setDeleteTarget(id))
+    dispatch(setZoom(1))
     console.log(files)
   }
 
@@ -124,7 +125,7 @@ const BottomNav = () => {
             <RotateCcw size={20}/>
           </button>
           <div className="select-none bg-white text-[rgb(23,23,23)] px-3 rounded">
-              <p>{Math.floor(Math.min(Math.max(currentZoomVal, 1), 3) * 100)}%</p>
+              <p>{Math.floor(Math.min(Math.max(currentZoomVal, 0.5), 3) * 100)}%</p>
           </div>
           <div className="flex gap-1">
               <button 

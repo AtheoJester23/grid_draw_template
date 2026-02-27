@@ -5,7 +5,7 @@ import CurrentTab from './components/CurrentTab'
 import NoSelected from './pages/NoSelected'
 import { useEffect, useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
-import { motion, AnimatePresence, inView } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux'
 import type { AppDispatch } from './state/store'
 import { setFrame, setZoom } from './state/EditConfig/EditSlice'
