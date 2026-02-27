@@ -15,6 +15,8 @@ function App() {
   const [settings, setSettings] = useState<boolean>(false)
   const dispatch = useDispatch<AppDispatch>()
 
+  const [ctrlDown, setCtrlDown] = useState<boolean>(false);
+
   useEffect(() => {
     const handleRightClick = (e: MouseEvent) => {
       e.preventDefault()
@@ -29,6 +31,37 @@ function App() {
       window.removeEventListener("contextmenu", handleRightClick)
     }
   }, [])
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if(e.ctrlKey){
+        e.preventDefault();
+        if(e.deltaY > 0) handleZoomOut();
+        else if(e.deltaY < 0) handleZoomIn();
+      }
+      
+      console.log("Global wheel deltaY:", e.deltaY);
+    };
+    
+    const handleKeydown = (e: KeyboardEvent) => {
+      if(e.key === "Control") setCtrlDown(true)
+    } 
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if(e.key === "Control") setCtrlDown(false)
+    }
+
+    window.addEventListener("wheel", handleWheel, {passive: false});
+    window.addEventListener("keydown", handleKeydown )
+    window.addEventListener("keyup", handleKeyUp);
+
+    // Cleanup when component unmounts
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeydown); // <-- fixed
+      window.removeEventListener("keyup", handleKeyUp);      // <-- fixed
+    };
+  }, []);
 
   const handleClose = () => setSettings(false)
 
