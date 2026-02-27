@@ -39,12 +39,6 @@ const CurrentTab = () => {
     
     useEffect(() => {
         if(!currentFile) return;
-        x.set(currentFile.picState.x);
-        y.set(currentFile.picState.y);
-    }, [currentFile?.picState.x, currentFile?.picState.y])
-    
-    useEffect(() => {
-        if(!currentFile) return;
         width.set(currentFile.picState.width);
         height.set(currentFile.picState.height);
     }, [currentFile?.picState.width, currentFile?.picState.height])
@@ -430,9 +424,8 @@ const CurrentTab = () => {
 
                         handleUpdatePicPos(newX, newY, newWidth, newHeight)
                     }}
-                    transition={{
-                        type: "spring"
-                    }}
+                    animate={{ x: currentFile.picState.x, y: currentFile.picState.y }}
+                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
                 >
 
                     {/* Image */}

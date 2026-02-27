@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Upload, X } from 'lucide-react'
 import type { AppDispatch, RootState } from '../../state/store'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentTab, setDeleteTarget, setFiles, setNewFile } from '../../state/Files/FileSlice'
+import { setCurrentTab, setDeleteTarget, setDownload, setFiles, setNewFile } from '../../state/Files/FileSlice'
 import React, { useRef, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { nanoid } from 'nanoid'
@@ -83,6 +83,7 @@ const NewFile = () => {
             dispatch(setFiles([...currentFiles, saveFile]))
             dispatch(setCurrentTab(currentFiles.length));
             dispatch(setDeleteTarget(id))
+            dispatch(setDownload(false))
         })
         
         // toast.success("New file created!", {

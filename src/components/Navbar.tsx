@@ -6,12 +6,13 @@ import type { AppDispatch, RootState } from '../state/store';
 import { setDownload, setNewFile } from '../state/Files/FileSlice';
 import { ToastContainer } from 'react-toastify';
 import ItemSettings from './ItemSettings';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 
 const Navbar = () => {
     const [openFile, setOpenFile] = useState<boolean>(false)
     const dispatch = useDispatch<AppDispatch>()
+    const { id } = useParams();
 
     const handleNew = () => {
         setOpenFile(false)
@@ -19,6 +20,12 @@ const Navbar = () => {
     }
 
     const handleDl = () => {
+        if(!id){
+            console.log("no id detected")
+            return;
+        }else{
+            console.log(id);
+        }
         setOpenFile(false);
         dispatch(setDownload(true))
     }

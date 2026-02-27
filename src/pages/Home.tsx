@@ -7,6 +7,8 @@ import { Plus } from 'lucide-react';
 import NewFile from '../components/Pops/NewFile';
 import DeleteWarning from '../components/Pops/DeleteWarning';
 import { Outlet } from 'react-router-dom';
+import { setNewFile } from '../state/Files/FileSlice';
+import Navbar from '../components/Navbar';
 
 const Home = () => {
   const currentPosition = useSelector((state: RootState) => state.editFile.frame);
@@ -20,6 +22,7 @@ const Home = () => {
   return (
     <>
       <div className='relative overflow-hidden'>
+        <Navbar/>
         <motion.div 
           drag
           dragMomentum={false}
@@ -37,7 +40,7 @@ const Home = () => {
           className="grid place-items-center h-screen hover:cursor-grab active:cursor-grabbing"
         >
           {fileManager.length < 1 ? (
-            <div className='flex flex-col text-gray-500 justify-center items-center p-5 border border-3 border-gray-500 border-dashed rounded h-[70%] w-[70%]'>
+            <div onClick={() => dispatch(setNewFile(true))} className='flex flex-col text-gray-500 justify-center items-center p-5 border border-3 border-gray-500 border-dashed rounded h-[70%] w-[70%] cursor-pointer'>
               <Plus className='' size="100"/>
               <p className='text-3xl font-bold'>New File</p>
             </div>
