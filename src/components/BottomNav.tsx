@@ -76,6 +76,19 @@ const BottomNav = () => {
     });
   };
 
+  const handleResetRotation = () => {
+    dispatch((dispatch, getState) => {
+      const filesList = getState().fileHolder.files;
+
+      const updatedFile = filesList.map(item => item.id == id 
+        ? {...item, picState: {...item.picState, rotate: 0}} 
+        : item
+      ) 
+
+      dispatch(setFiles(updatedFile));
+    })
+  }
+
   return (
     <div className="z-50 absolute bottom-0 left-0 right-0 flex flex-col gap-[1.6px] bg-[rgb(23,23,23)]">
       {files.length > 0 && (
@@ -100,7 +113,7 @@ const BottomNav = () => {
             <button type="button" onClick={() => handleResetImg()} className="select-none gradientBtn px-2 hover:cursor-pointer duration-300">
               <AlignCenterVertical/>
             </button>
-            <button type="button" onClick={() => handleResetImg()} className="select-none gradientBtn px-2 hover:cursor-pointer duration-300">
+            <button type="button" onClick={() => handleResetRotation()} className="select-none gradientBtn px-2 hover:cursor-pointer duration-300">
               <RefreshCcw/>
             </button>
           </div>
