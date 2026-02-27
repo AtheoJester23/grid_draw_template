@@ -5,7 +5,7 @@ import CurrentTab from './components/CurrentTab'
 import NoSelected from './pages/NoSelected'
 import { useEffect, useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, inView } from 'framer-motion';
 import { useDispatch } from 'react-redux'
 import type { AppDispatch } from './state/store'
 import { setFrame, setZoom } from './state/EditConfig/EditSlice'
@@ -14,8 +14,6 @@ function App() {
   const [menuPos, setMenuPos] = useState<{x: number, y: number} | null>(null)
   const [settings, setSettings] = useState<boolean>(false)
   const dispatch = useDispatch<AppDispatch>()
-
-  const [ctrlDown, setCtrlDown] = useState<boolean>(false);
 
   useEffect(() => {
     const handleRightClick = (e: MouseEvent) => {
@@ -36,30 +34,34 @@ function App() {
     const handleWheel = (e: WheelEvent) => {
       if(e.ctrlKey){
         e.preventDefault();
-        if(e.deltaY > 0) handleZoomOut();
-        else if(e.deltaY < 0) handleZoomIn();
+        if(e.deltaY > 0) {
+          handleZoomOut();
+          return;
+        }else if(e.deltaY < 0) {
+          handleZoomIn();
+          return;
+        }
       }
       
+      dispatch((dispatch, getState) => {
+        const currentYPos = getState().editFile.frame
+
+        if(e.deltaY > 0){
+          dispatch(setFrame({...currentYPos, y: currentYPos.y - 50}))
+        }else if(e.deltaY < 0){
+          dispatch(setFrame({...currentYPos, y: currentYPos.y + 50}))
+        }
+      })
+
       console.log("Global wheel deltaY:", e.deltaY);
     };
     
-    const handleKeydown = (e: KeyboardEvent) => {
-      if(e.key === "Control") setCtrlDown(true)
-    } 
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if(e.key === "Control") setCtrlDown(false)
-    }
 
     window.addEventListener("wheel", handleWheel, {passive: false});
-    window.addEventListener("keydown", handleKeydown )
-    window.addEventListener("keyup", handleKeyUp);
 
     // Cleanup when component unmounts
     return () => {
       window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("keydown", handleKeydown); // <-- fixed
-      window.removeEventListener("keyup", handleKeyUp);      // <-- fixed
     };
   }, []);
 
