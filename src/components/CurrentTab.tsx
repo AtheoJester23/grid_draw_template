@@ -5,6 +5,7 @@ import { motion, useMotionValue } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
 import Download from "./Pops/Download";
 import { setFiles } from "../state/Files/FileSlice";
+import { CornerDownRight, CornerLeftDown, CornerRightUp, CornerUpLeft } from "lucide-react";
 
 const CurrentTab = () => {
     const containerRef = useRef<HTMLDivElement>(null)
@@ -21,8 +22,64 @@ const CurrentTab = () => {
     const height = useMotionValue(currentFile?.picState.height);
     const x = useMotionValue(currentFile?.picState.x);
     const y = useMotionValue(currentFile?.picState.y);
+    const rotate = useMotionValue(0)
 
     const ref = useRef(null)
+    const startAngleRef = useRef(0);
+
+    useEffect(() => {
+        const current = rotate.get();
+        rotationRef.current = current;
+    }, []);
+
+    const getAngle = (clientX: number, clientY: number) => {
+        const { x: centerX, y: centerY } = centerRef.current;
+
+        const dx = clientX - centerX;
+        const dy = clientY - centerY;
+
+        return Math.atan2(dy, dx) * (180 / Math.PI);
+    };
+
+    const rotationRef = useRef(0);
+    const startMouseAngleRef = useRef(0);
+    const startRotationRef = useRef(0);
+    const centerRef = useRef({ x: 0, y: 0 });
+
+    const handleMouseDown = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!containerRef.current) return;
+
+        const rect = containerRef.current.getBoundingClientRect();
+        centerRef.current = {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+        };
+
+        startMouseAngleRef.current = getAngle(e.clientX, e.clientY);
+        startRotationRef.current = rotationRef.current;
+
+        const moveHandler = (moveEvent: MouseEvent) => {
+            const currentAngle = getAngle(moveEvent.clientX, moveEvent.clientY);
+
+            const newRotation =
+            startRotationRef.current +
+            (currentAngle - startMouseAngleRef.current);
+
+            rotationRef.current = newRotation;
+            rotate.set(newRotation);
+        };
+
+        const upHandler = () => {
+            window.removeEventListener("mousemove", moveHandler);
+            window.removeEventListener("mouseup", upHandler);
+        };
+
+        window.addEventListener("mousemove", moveHandler);
+        window.addEventListener("mouseup", upHandler);
+    };
 
     useEffect(() => {
         function handleClickOutside(e: MouseEvent) {
@@ -400,149 +457,201 @@ const CurrentTab = () => {
                 </>
 
                 {/* Grids here */}
-                <motion.div
-                    onClick={() => setTouched(true)}
-                    drag
-                    dragMomentum={false}
-                    ref={containerRef}
-                    style={{
-                        width,
-                        height,
-                        x,
-                        y,
-                        position: "relative",
-                    }}
-                    className={`z-10 overflow-hidden ${touched && "border border-2 border-dashed border-gray-500 cursor-grab active:cursor-grabbing"}`}
-                    onMouseDown={() => setTouched(true)}  // click or hold starts here
-                    onDragEnd={() => {
-                        const newX = x.get();
-                        const newY = y.get();
-                        const newWidth = width.get();
-                        const newHeight = width.get();
-
-                        console.log(`width: ${typeof width.get()}`)
-
-                        handleUpdatePicPos(newX, newY, newWidth, newHeight)
-                    }}
-                    animate={{ x: currentFile.picState.x, y: currentFile.picState.y }}
-                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                >
-
-                    {/* Image */}
-                    <motion.img
-                        src={currentFile.pic}
-                        alt="Resizable"
-                        style={{ width: "100%", height: "100%", objectFit: "contain" }}
-                        draggable={false}
-                        className={`${touched ? "opacity-80" : ""} pointer-events-none`}
-                    />
-
-                    {/* Resize Handle (bottom-right) */}
                     <motion.div
+                        onClick={() => setTouched(true)}
                         drag
                         dragMomentum={false}
-                        dragElastic={0}
-                        dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
-                        onDrag={(_, info) => {
-                            const delta = info.delta.x
-                            const aspectRatio = 1;
-                            const newWidth = Math.max(100, width.get() + delta);
-                            width.set(newWidth);
-                            height.set(newWidth / aspectRatio)
+                        ref={containerRef}
+                        style={{
+                            width,
+                            height,
+                            x,
+                            y,
+                            rotate,
+                            position: "relative",
                         }}
-                        onDragEnd={() => {
-                            const newWidth = width.get();
-                            const newHeight = height.get();
-
-                            handleUpdatePicSize(newWidth, newHeight);
-                        }}
-                        className={`${touched ? "visible" : "hidden"} w-2 h-2 absolute bottom-[0] right-[0] cursor-se-resize bg-black`}
-                    />
-
-                    {/* Resize Handle (bottom-left) */}
-                    <motion.div
-                        drag
-                        dragMomentum={false}
-                        dragElastic={0}
-                        dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
-                        onDrag={(_, info) => {
-                            const delta = info.delta.x
-                            const aspectRatio = 1;
-                            const newWidth = Math.max(100, width.get() - delta);
-                            
-                            x.set(x.get() + delta);
-                            
-                            width.set(newWidth);
-                            height.set(newWidth / aspectRatio)
-                        }}
-                        onDragEnd={() => {
-                            const newX = x.get();
-                            const newWidth = width.get();
-                            const newHeight = height.get();
-
-                            handleUpdatePicSize(newWidth, newHeight, newX);
-                        }}
-                        className={`${touched ? "visible" : "hidden"} w-2 h-2 bg-black absolute bottom-[0] left-[0] cursor-sw-resize`}
-                    />
-
-                    {/* Resize Handle (top-left) */}
-                    <motion.div
-                        drag
-                        dragMomentum={false}
-                        dragElastic={0}
-                        dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
-                        onDrag={(_, info) => {
-                            const dx = info.delta.x
-                            const dy = info.delta.y;
-                            const aspectRatio = 1;
-                            const newWidth = Math.max(100, width.get() - dx);
+                        className={`z-10 ${touched && "border border-2 border-dashed border-gray-500 cursor-grab active:cursor-grabbing"}`}
+                        onMouseDown={() => setTouched(true)}  // click or hold starts here
                         
-                            x.set(x.get() + dx)
-                            y.set(y.get() + dy)
-
-                            width.set(newWidth);
-                            height.set(newWidth / aspectRatio)
-                        }}
                         onDragEnd={() => {
                             const newX = x.get();
                             const newY = y.get();
                             const newWidth = width.get();
                             const newHeight = height.get();
 
-                            handleUpdatePicSize(newWidth, newHeight, newX, newY);
+                            console.log(`width: ${typeof width.get()}`)
+
+                            handleUpdatePicPos(newX, newY, newWidth, newHeight)
                         }}
-                        className={`${touched ? "visible" : "hidden"} w-2 h-2 bg-black absolute top-[0] left-[0] cursor-nw-resize`}
-                    />
-                    
-                    {/* Resize Handle (top-right) */}
-                    <motion.div
-                        drag
-                        dragMomentum={false}
-                        dragElastic={0}
-                        dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
-                        onDrag={(_, info) => {
-                            const dx = info.delta.x
-                            const dy = info.delta.y;
-                            const aspectRatio = 1;
-                            const newWidth = Math.max(100, width.get() + dx);
+                        animate={{ x: currentFile.picState.x, y: currentFile.picState.y }}
+                        transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                    >
+
+                        {/* Image */}
+                        <motion.img
+                            src={currentFile.pic}
+                            alt="Resizable"
+                            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                            draggable={false}
+                            className={`${touched ? "opacity-80" : ""} pointer-events-none`}
+                        />
+
+                        {/* Resize Handle (bottom-right) */}
+                        <motion.div
+                            drag
+                            dragMomentum={false}
+                            dragElastic={0}
+                            dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
+                            onDrag={(_, info) => {
+                                const delta = info.delta.x
+                                const aspectRatio = 1;
+                                const newWidth = Math.max(100, width.get() + delta);
+                                width.set(newWidth);
+                                height.set(newWidth / aspectRatio)
+                            }}
+                            onDragEnd={() => {
+                                const newWidth = width.get();
+                                const newHeight = height.get();
+
+                                handleUpdatePicSize(newWidth, newHeight);
+                            }}
+                            className={`${touched ? "visible" : "hidden"} w-2 h-2 absolute bottom-[0] right-[0] cursor-se-resize bg-black`}
+                        />
+
+                        {/* Resize Handle (bottom-left) */}
+                        <motion.div
+                            drag
+                            dragMomentum={false}
+                            dragElastic={0}
+                            dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
+                            onDrag={(_, info) => {
+                                const delta = info.delta.x
+                                const aspectRatio = 1;
+                                const newWidth = Math.max(100, width.get() - delta);
+                                
+                                x.set(x.get() + delta);
+                                
+                                width.set(newWidth);
+                                height.set(newWidth / aspectRatio)
+                            }}
+                            onDragEnd={() => {
+                                const newX = x.get();
+                                const newWidth = width.get();
+                                const newHeight = height.get();
+
+                                handleUpdatePicSize(newWidth, newHeight, newX);
+                            }}
+                            className={`${touched ? "visible" : "hidden"} w-2 h-2 bg-black absolute bottom-[0] left-[0] cursor-sw-resize`}
+                        />
+
+                        {/* Resize Handle (top-left) */}
+                        <motion.div
+                            drag
+                            dragMomentum={false}
+                            dragElastic={0}
+                            dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
+                            onDrag={(_, info) => {
+                                const dx = info.delta.x
+                                const dy = info.delta.y;
+                                const aspectRatio = 1;
+                                const newWidth = Math.max(100, width.get() - dx);
+                            
+                                x.set(x.get() + dx)
+                                y.set(y.get() + dy)
+
+                                width.set(newWidth);
+                                height.set(newWidth / aspectRatio)
+                            }}
+                            onDragEnd={() => {
+                                const newX = x.get();
+                                const newY = y.get();
+                                const newWidth = width.get();
+                                const newHeight = height.get();
+
+                                handleUpdatePicSize(newWidth, newHeight, newX, newY);
+                            }}
+                            className={`${touched ? "visible" : "hidden"} w-2 h-2 bg-black absolute top-[0] left-[0] cursor-nw-resize`}
+                        />
                         
-                            y.set(y.get() + dy)
+                        {/* Resize Handle (top-right) */}
+                        <motion.div
+                            drag
+                            dragMomentum={false}
+                            dragElastic={0}
+                            dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} // prevents visual movement
+                            onDrag={(_, info) => {
+                                const dx = info.delta.x
+                                const dy = info.delta.y;
+                                const aspectRatio = 1;
+                                const newWidth = Math.max(100, width.get() + dx);
+                            
+                                y.set(y.get() + dy)
 
-                            width.set(newWidth);
-                            height.set(newWidth / aspectRatio)
-                        }}
-                        onDragEnd={() => {
-                            const newY = y.get();
-                            const newWidth = width.get();
-                            const newHeight = height.get();
+                                width.set(newWidth);
+                                height.set(newWidth / aspectRatio)
+                            }}
+                            onDragEnd={() => {
+                                const newY = y.get();
+                                const newWidth = width.get();
+                                const newHeight = height.get();
 
-                            handleUpdatePicSize(newWidth, newHeight, undefined, newY);
-                        }}
-                        className={`${touched ? "visible" : "hidden"} w-2 h-2 bg-black absolute top-[0] right-[0] cursor-ne-resize`}
-                    />
-                
-                </motion.div>
-                
+                                handleUpdatePicSize(newWidth, newHeight, undefined, newY);
+                            }}
+                            className={`${touched ? "visible" : "hidden"} w-2 h-2 bg-black absolute top-[0] right-[0] cursor-ne-resize`}
+                        />
+
+                        {/* Rotation handle br*/}
+                        <motion.div 
+                            drag
+                            dragConstraints={{left: 0, right: 0, top: 0, bottom: 0}}
+                            onMouseDown={(e) => {
+                                e.stopPropagation(); 
+                                handleMouseDown(e)
+                            }}
+                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute bottom-[-30px] right-[-30px] cursor-grab active:cursor-grabbing duration-300"
+                        >
+                            <CornerRightUp color="gray"/>
+                        </motion.div>
+
+                        {/* Rotation handle tr*/}
+                        <motion.div 
+                            drag
+                            dragConstraints={{left: 0, right: 0, top: 0, bottom: 0}}
+                            onMouseDown={(e) => {
+                                e.stopPropagation(); 
+                                handleMouseDown(e)
+                            }}
+                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute top-[-30px] right-[-30px] cursor-grab active:cursor-grabbing duration-300"
+                        >
+                            <CornerUpLeft color="gray"/>
+                        </motion.div>
+
+                        {/* Rotation handle tl*/}
+                        <motion.div 
+                            drag
+                            dragConstraints={{left: 0, right: 0, top: 0, bottom: 0}}
+                            onMouseDown={(e) => {
+                                e.stopPropagation(); 
+                                handleMouseDown(e)
+                            }}
+                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute top-[-30px] left-[-30px] cursor-grab active:cursor-grabbing duration-300"
+                        >
+                            <CornerLeftDown color="gray"/>
+                        </motion.div>
+
+                        {/* Rotation handle bl*/}
+                        <motion.div 
+                            drag
+                            dragConstraints={{left: 0, right: 0, top: 0, bottom: 0}}
+                            onMouseDown={(e) => {
+                                e.stopPropagation(); 
+                                handleMouseDown(e)
+                            }}
+                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute bottom-[-30px] left-[-30px] cursor-grab active:cursor-grabbing duration-300"
+                        >
+                            <CornerDownRight color="gray"/>
+                        </motion.div>
+                    </motion.div>
             </div>
         </motion.div>
         <Download theRef={ref} defName={currentFile.name}/>
