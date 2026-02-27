@@ -1,4 +1,4 @@
-import { AlignCenterVertical, Minus, Plus, RotateCcw, X } from "lucide-react"
+import { AlignCenterVertical, Minus, Plus, RefreshCcw, RotateCcw, X } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "../state/store"
 import { setFrame, setZoom } from "../state/EditConfig/EditSlice"
@@ -57,6 +57,7 @@ const BottomNav = () => {
   const handleSelectedTab = (target: number, id: string) => {
     dispatch(setCurrentTab(target))
     dispatch(setDeleteTarget(id))
+    console.log(files)
   }
 
   const { id } = useParams();
@@ -95,9 +96,14 @@ const BottomNav = () => {
       )}
       <div className={`text-sm navbarStyle flex ${files.length > 0 ? "justify-between" : "justify-end"}`}>
         {files.length > 0 && (
-          <button type="button" onClick={() => handleResetImg()} className="select-none gradientBtn px-2 hover:cursor-pointer duration-300">
-            <AlignCenterVertical/>
-          </button>
+          <div className="flex justify-center items-center gap-2">
+            <button type="button" onClick={() => handleResetImg()} className="select-none gradientBtn px-2 hover:cursor-pointer duration-300">
+              <AlignCenterVertical/>
+            </button>
+            <button type="button" onClick={() => handleResetImg()} className="select-none gradientBtn px-2 hover:cursor-pointer duration-300">
+              <RefreshCcw/>
+            </button>
+          </div>
         )}
         
         <div className="flex items-center gap-1">

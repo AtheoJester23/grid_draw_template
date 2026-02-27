@@ -13,6 +13,7 @@ type filesType = {
         y: number,
         width: number,
         height: number,
+        rotate: number,
     }
     orientation: 'portrait' | 'landscape'
 }

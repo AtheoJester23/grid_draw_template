@@ -18,19 +18,20 @@ const CurrentTab = () => {
     const filesList = useSelector((state: RootState) => state.fileHolder.files);
     
     const currentFile = filesList.find(item => item.id == id);
-    const width = useMotionValue(currentFile?.picState.width);
-    const height = useMotionValue(currentFile?.picState.height);
-    const x = useMotionValue(currentFile?.picState.x);
-    const y = useMotionValue(currentFile?.picState.y);
+    const width = useMotionValue(currentFile?.picState.width ?? 300);
+    const height = useMotionValue(currentFile?.picState.height ?? 300);
+    const x = useMotionValue(currentFile?.picState.x ?? 0);
+    const y = useMotionValue(currentFile?.picState.y ?? 0);
     const rotate = useMotionValue(0)
+
+    useEffect(() => {
+        if(!currentFile) return;
+
+        rotate.set(currentFile?.picState.rotate);
+    }, [currentFile])
 
     const ref = useRef(null)
     const startAngleRef = useRef(0);
-
-    useEffect(() => {
-        const current = rotate.get();
-        rotationRef.current = current;
-    }, []);
 
     const getAngle = (clientX: number, clientY: number) => {
         const { x: centerX, y: centerY } = centerRef.current;
@@ -41,7 +42,6 @@ const CurrentTab = () => {
         return Math.atan2(dy, dx) * (180 / Math.PI);
     };
 
-    const rotationRef = useRef(0);
     const startMouseAngleRef = useRef(0);
     const startRotationRef = useRef(0);
     const centerRef = useRef({ x: 0, y: 0 });
@@ -59,7 +59,7 @@ const CurrentTab = () => {
         };
 
         startMouseAngleRef.current = getAngle(e.clientX, e.clientY);
-        startRotationRef.current = rotationRef.current;
+        startRotationRef.current = rotate.get();
 
         const moveHandler = (moveEvent: MouseEvent) => {
             const currentAngle = getAngle(moveEvent.clientX, moveEvent.clientY);
@@ -68,8 +68,7 @@ const CurrentTab = () => {
             startRotationRef.current +
             (currentAngle - startMouseAngleRef.current);
 
-            rotationRef.current = newRotation;
-            rotate.set(newRotation);
+            rotate.set(newRotation);            
         };
 
         const upHandler = () => {
@@ -79,6 +78,23 @@ const CurrentTab = () => {
 
         window.addEventListener("mousemove", moveHandler);
         window.addEventListener("mouseup", upHandler);
+    };
+
+    const handleUpdateRotate = () => {
+        const updatedThing = filesList.map(item =>
+            item.id === id
+            ? {
+                ...item,
+                picState: {
+                    ...item.picState,  // spread existing picState
+                    rotate: rotate.get() // get value from motion value
+                }
+                }
+            : item
+        );
+
+        dispatch(setFiles(updatedThing));
+        console.log(updatedThing);
     };
 
     useEffect(() => {
@@ -109,7 +125,7 @@ const CurrentTab = () => {
 
     const handleUpdatePicSize = (newWidth: number, newHeigth: number, newX?: number, newY?: number) => {
         if(!currentFile) return;
-        const updatedPic = filesList.map((item) => item.id == currentFile.id ? ({...item, picState: {width: newWidth, height: newHeigth, y: newY ?? item.picState.y, x: newX ?? item.picState.x}}) : ({...item}))
+        const updatedPic = filesList.map((item) => item.id == currentFile.id ? ({...item, picState: {...item.picState, width: newWidth, height: newHeigth, y: newY ?? item.picState.y, x: newX ?? item.picState.x}}) : ({...item}))
         
         dispatch(setFiles(updatedPic));
     }
@@ -608,7 +624,10 @@ const CurrentTab = () => {
                                 e.stopPropagation(); 
                                 handleMouseDown(e)
                             }}
-                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute bottom-[-30px] right-[-30px] cursor-grab active:cursor-grabbing duration-300"
+                            onDragEnd={() => {
+                                handleUpdateRotate()
+                            }}
+                            className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute bottom-[-30px] right-[-30px] cursor-none active:cursor-grabbing duration-300"
                         >
                             <CornerRightUp color="gray"/>
                         </motion.div>
@@ -620,6 +639,9 @@ const CurrentTab = () => {
                             onMouseDown={(e) => {
                                 e.stopPropagation(); 
                                 handleMouseDown(e)
+                            }}
+                            onDragEnd={() => {
+                                handleUpdateRotate()
                             }}
                             className="opacity-0 hover:opacity-100 w-[20px] h-[20px] rounded-full absolute top-[-30px] right-[-30px] cursor-grab active:cursor-grabbing duration-300"
                         >

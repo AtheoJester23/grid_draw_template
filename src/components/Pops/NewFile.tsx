@@ -72,7 +72,8 @@ const NewFile = () => {
                 x: 0,
                 y: 0,
                 width: size === "A4" ? 381 : 384,
-                height: size === "A4" ? 381 : 384
+                height: size === "A4" ? 381 : 384,
+                rotate: 0
             },
             bnw: bnw == "on" ? true : false,
             orientation

@@ -13,9 +13,6 @@ const ItemSettings = () => {
     const currentTab = useSelector((state: RootState) => state.fileHolder.currentTab);
 
     const currentFile = currentTab != null ? fileList[currentTab] : undefined;
-
-    console.log("-----------------------------------------------------")
-    console.log(currentFile?.border);
     
   return (
     <>
