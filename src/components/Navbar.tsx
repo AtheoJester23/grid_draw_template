@@ -58,11 +58,11 @@ const Navbar = () => {
                             transition={{type: "tween", duration: 0.4, stiffness: 5}}
                         >
                             <DialogPanel className="flex flex-col gap-2 text-sm w-auto leading-none p-1 text-[rgb(23,23,23)] relative">
-                                <button onClick={()=> handleNew()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1'>New...</button>
+                                <button onClick={()=> handleNew()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1 flex'>New...</button>
                                 {fileList.length > 0 ? (
                                     <button onClick={()=> handleDl()} className='leading-none hover:bg-blue-500 hover:text-white px-5 py-1 text-[rgb(23,23,23)]'>Download</button>
                                 ):(
-                                    <div className='leading-none hover:bg-blue-500 px-5 py-1 text-gray-500 select-none'>Download</div>
+                                    <div className='leading-none hover:bg-blue-500 px-5 py-1 text-gray-500 select-none flex justify-end'>Download</div>
                                 )}
                             </DialogPanel>
                         </motion.div>

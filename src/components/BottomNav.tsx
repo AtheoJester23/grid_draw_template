@@ -49,13 +49,14 @@ const BottomNav = () => {
 
   const files = useSelector((state: RootState) => state.fileHolder.files)
 
-  const activateDelete = (target: number) => {
+  const activateDelete = (target: string) => {
     dispatch(setDeleteTarget(target))
     dispatch(setDelete(true))
   }
 
-  const handleSelectedTab = (target: number) => {
+  const handleSelectedTab = (target: number, id: string) => {
     dispatch(setCurrentTab(target))
+    dispatch(setDeleteTarget(id))
   }
 
   const { id } = useParams();
@@ -79,13 +80,13 @@ const BottomNav = () => {
       {files.length > 0 && (
         <div className="px-2 flex gap-0.5 tabsContainer overflow-x-auto">
           {files.map((item, index) => (
-            <div onClick={() => handleSelectedTab(index)} key={index} className="relative">
+            <div onClick={() => handleSelectedTab(index, item.id)} key={index} className="relative">
               <NavLink to={`tab/${item.id}`} className="tabsStyle inline-flex p-1 px-2 w-45 text-white rounded-t">
                 <div className="w-full flex items-center justify-between">
                   <p className="truncate w-[80%]">{item.name}</p>
                 </div>
               </NavLink>
-              <button onClick={() => activateDelete(index)} className="cursor-pointer absolute right-1 top-2 text-white hover:text-red-900 duration-100">
+              <button onClick={() => activateDelete(item.id)} className="cursor-pointer absolute right-1 top-2 text-white hover:text-red-900 duration-100">
                 <X size={20}/>
               </button>
             </div>

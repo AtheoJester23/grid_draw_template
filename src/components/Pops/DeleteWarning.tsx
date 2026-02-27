@@ -10,7 +10,7 @@ const DeleteWarning = () => {
     const isOpen = useSelector((state: RootState) => state.fileHolder.delete);
     const dispatch = useDispatch<AppDispatch>()
 
-    const {tabNum} = useParams()
+    const { id } = useParams()
     const navigate = useNavigate();
 
     const handleAbort = () => {
@@ -21,27 +21,22 @@ const DeleteWarning = () => {
     const handleProceed = () => {
         dispatch((dispatch, getState) => {
             const currentFiles = getState().fileHolder.files;
-            const DeleteTargetIndex = getState().fileHolder.targetDelete
+            const DeleteTargetId = getState().fileHolder.targetDelete
+            const indexOfTarget = currentFiles.findIndex(item => item.id == id);
+
             const currentTab = getState().fileHolder.currentTab
 
-            if(currentTab == DeleteTargetIndex){
-                dispatch(setCurrentTab(currentTab! - 1))
-            }
-
-            const filtered = currentFiles.filter((_, index) => index !== DeleteTargetIndex)
+            const filtered = currentFiles.filter((item) => item.id !== DeleteTargetId)
             
             dispatch(setFiles(filtered));
             dispatch(setDeleteTarget(null));
             dispatch(setDelete(false))
 
-            if(filtered.length > 0 && DeleteTargetIndex! <= Number(tabNum)){
-                navigate(`/tab/${Number(tabNum) - 1}`)
-                dispatch(setDeleteTarget(Number(tabNum) - 1));
-            }else if(filtered.length > 0 && DeleteTargetIndex! > Number(tabNum)){
-                console.log("Do nothing")
-            }else{
-                navigate('/')
+            if(DeleteTargetId! == id){
+                dispatch(setDeleteTarget(null));
+                navigate(`/`)
             }
+
         })
     }
 

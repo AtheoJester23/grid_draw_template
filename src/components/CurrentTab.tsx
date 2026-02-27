@@ -71,7 +71,7 @@ const CurrentTab = () => {
             ref={ref}
             className={`frameSize${currentFile.size}${currentFile.orientation} ${currentFile.bnw == true && 'grayscale'} bg-white flex justify-center items-center ${currentFile.border + currentFile.size} cursor-default`}
         >
-            <div className={`relative ${touched ? "" : "overflow-hidden"} content grid h-full w-full flex ${currentFile.border !== "noBorder" && "border-[1.5px]"}`}>
+            <div className={`relative ${touched ? "" : "overflow-hidden"} content grid h-full w-full flex justify-center items-center ${currentFile.border !== "noBorder" && "border-[1.5px]"}`}>
                 <>
                     {currentFile.size == "4x6" && (
                         <>
@@ -430,6 +430,9 @@ const CurrentTab = () => {
 
                         handleUpdatePicPos(newX, newY, newWidth, newHeight)
                     }}
+                    transition={{
+                        type: "spring"
+                    }}
                 >
 
                     {/* Image */}
@@ -460,7 +463,7 @@ const CurrentTab = () => {
 
                             handleUpdatePicSize(newWidth, newHeight);
                         }}
-                        className={`w-4 h-4 absolute bottom-[0] right-[0] cursor-se-resize`}
+                        className={`${touched ? "visible" : "hidden"} w-2 h-2 absolute bottom-[0] right-[0] cursor-se-resize bg-black`}
                     />
 
                     {/* Resize Handle (bottom-left) */}
@@ -486,7 +489,7 @@ const CurrentTab = () => {
 
                             handleUpdatePicSize(newWidth, newHeight, newX);
                         }}
-                        className={`w-4 h-4 absolute bottom-[0] left-[0] cursor-sw-resize`}
+                        className={`${touched ? "visible" : "hidden"} w-2 h-2 bg-black absolute bottom-[0] left-[0] cursor-sw-resize`}
                     />
 
                     {/* Resize Handle (top-left) */}
@@ -515,7 +518,7 @@ const CurrentTab = () => {
 
                             handleUpdatePicSize(newWidth, newHeight, newX, newY);
                         }}
-                        className={`w-4 h-4 absolute top-[0] left-[0] cursor-nw-resize`}
+                        className={`${touched ? "visible" : "hidden"} w-2 h-2 bg-black absolute top-[0] left-[0] cursor-nw-resize`}
                     />
                     
                     {/* Resize Handle (top-right) */}
@@ -542,7 +545,7 @@ const CurrentTab = () => {
 
                             handleUpdatePicSize(newWidth, newHeight, undefined, newY);
                         }}
-                        className={`w-4 h-4 absolute top-[0] right-[0] cursor-ne-resize`}
+                        className={`${touched ? "visible" : "hidden"} w-2 h-2 bg-black absolute top-[0] right-[0] cursor-ne-resize`}
                     />
                 
                 </motion.div>

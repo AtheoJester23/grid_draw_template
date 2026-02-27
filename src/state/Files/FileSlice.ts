@@ -22,7 +22,7 @@ type stateType = {
     newFile: boolean,
     download: boolean,
     delete: boolean,
-    targetDelete: number | null,
+    targetDelete: string | null,
     currentTab: number | null,
     grayscale: boolean,
 }
