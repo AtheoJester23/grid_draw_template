@@ -74,7 +74,7 @@ const Navbar = () => {
                             </DialogPanel>
                         </motion.div>
                     </Dialog>
-                    <a href={"https://www.youtube.com/@AtheoCodes"} target='_blank' className={`gradientBtn leading-none px-3 py-[1.5px] ms-1 rounded text-sm`}>Tutorial</a>
+                    <a href={"https://youtu.be/0CTuvWzYXXw"} target='_blank' className={`gradientBtn leading-none px-3 py-[1.5px] ms-1 rounded text-sm`}>Tutorial</a>
                 </div>
             </motion.div>
             

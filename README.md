@@ -34,6 +34,13 @@ GridArt Editor is a web-based tool for artists to create **reference grids** for
 
 ---
 
+Example photo used:
+Old man:
+<a href="https://www.freepik.com/free-photo/elderly-man-face-portrait-smiling-close-up_18836216.htm#fromView=search&page=1&position=0&uuid=a8e2567a-65e4-40b5-936d-1a4f09383b67&query=old+face+portrait">Image by rawpixel.com on Freepik</a>
+
+People Camping:
+Photo by <a href="https://unsplash.com/@randyfath?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Randy Fath</a> on <a href="https://unsplash.com/photos/people-outside-of-camper-wagon-e-OGWPEM4O0?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
 ## License
 
 All Rights Reserved © 2026 Atheo Jester S. Baltazar
