@@ -67,7 +67,7 @@ c. Configure the new file:
 
 <br/>
 
-7. Zoom in & zoom out:
+6. Zoom in & zoom out:
 <div align=center>
   <img src="https://github.com/user-attachments/assets/1fe278af-a44b-4462-a4e5-c3e3b6070d8c"/>
 </div>
@@ -79,7 +79,7 @@ Options:
   
 <br/>
 
-8. Download:
+7. Download:
 <div align=center>
    
   <img src="https://github.com/user-attachments/assets/706e7b94-d02c-4e12-94e8-bf7907143e87"/>
@@ -103,7 +103,7 @@ e. Click "Save"
 
 <h1 align=center>Other feature</h1>
 
-9. Drag around:
+8. Drag around:
 <div align=center>
   <img src="https://github.com/user-attachments/assets/0d6d736b-5d9b-4dc4-9e1c-8d43ed652f9a"/>
 </div>
