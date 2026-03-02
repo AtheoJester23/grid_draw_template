@@ -1,6 +1,6 @@
 <h1 align=center>GridArt Editor</h1>
 <p align=center>
-  🌐 Live Website: <a href="https://gridarteditor.vercel.app/">https://totatstattoo.vercel.app/</a>
+  🌐 Live Website: <a href="https://gridarteditor.vercel.app/">https://gridarteditor.vercel.app/</a>
 </p>
 
 
