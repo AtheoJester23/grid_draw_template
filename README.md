@@ -1,4 +1,4 @@
-<h1 align=center>GridArt Editor</h1>
+<h1 align=center>Grid Art Editor</h1>
 <p align=center>
   🌐 Live Website: <a href="https://gridarteditor.vercel.app/">https://gridarteditor.vercel.app/</a>
 </p>
@@ -6,7 +6,7 @@
 
 <br/>
 
-GridArt Editor is a web-based tool for artists to create **reference grids** for drawings, paintings, or digital art. Easily overlay customizable grids on preset canvas sizes to improve proportions, perspective, and composition.
+Grid Art Editor is a web-based tool for artists to create **reference grids** for drawings, paintings, or digital art. Easily overlay customizable grids on preset canvas sizes to improve proportions, perspective, and composition.
 
 ## 🌟 Features
 
